@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { layouts } from '../constants/layouts'
 import SharedButton from '../shared/SharedButton'
 
 function Layouts() {
+  const [selected , setSelected] = useState(null)
+
+
+  const handleButtonclick = (id) =>{
+    setSelected(id===selected ? null : id )
+
+
+
+  }
   return (
     <div className='w-full mt-20'>
 
@@ -11,10 +20,14 @@ function Layouts() {
         </h2>
         <div className='w-full h-fit  '>
            <ul className=' flex flex-row '>
-           {layouts.map((item , index)=>(
-            <li key={index} className=' w-full h-fit flex flex-col items-center px-1'>
+           {layouts.map((item )=>(
+            <li key={item.id} className=' w-full h-fit flex flex-col items-center px-1'>
                 <img src={item.image} alt="" />
-                <SharedButton/>
+                <SharedButton
+                onButtonClick={handleButtonclick}
+                isActive={selected === item.id}
+                item={item}
+                />
 
             </li>
             ))}

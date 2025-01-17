@@ -57,17 +57,20 @@ function DetailsForm() {
     })
 
     const handlechange = (e)=>{
+       
 
         const { name , value }= e.target;
         SetFormData({
             ...formData,
             [name] : value
         })
+
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: undefined,
+        }));
         
-
-        
-
-
+       
     }
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -159,7 +162,7 @@ function DetailsForm() {
                     name='email'
                     value={formData.email}
                     placeholder='E-mail'
-                    className=' w-full h-full border-none focus:outline-none bg-transparent pl-4'
+                    className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
                     onChange={handlechange}
 
                     />
@@ -175,7 +178,7 @@ function DetailsForm() {
                     name='phoneNumber'
                     value={formData.phoneNumber}
                     placeholder='phoneNumber'
-                    className=' w-full h-full border-none focus:outline-none pl-4 bg-transparent'
+                    className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base pl-4 bg-transparent'
                     onChange={handlechange}
 
 
@@ -192,7 +195,7 @@ function DetailsForm() {
                     name='whatsAppNumber'
                     value={formData.whatsAppNumber}
                     placeholder='WhatsApp Number'
-                    className=' w-full h-full border-none focus:outline-none placeholder:text-base bg-transparent pl-4'
+                    className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
                     onChange={handlechange}
 
 
@@ -209,7 +212,7 @@ function DetailsForm() {
                     name='locationLink'
                     value={formData.locationLink}
                     placeholder='Location Link'
-                    className=' w-full h-full border-none focus:outline-none placeholder:text-base bg-transparent pl-4'
+                    className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
                     onChange={handlechange}
 
 
@@ -226,7 +229,7 @@ function DetailsForm() {
                     name='businessName'
                     value={formData.businessName}
                     placeholder='Business Name'
-                    className=' w-full h-full border-none focus:outline-none placeholder:text-base bg-transparent pl-4'
+                    className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
                     onChange={handlechange}
 
 
@@ -244,7 +247,7 @@ function DetailsForm() {
                     id='broucher'
                     name='broucher'
                     placeholder='Upload your Broucher'
-                    className=' hidden w-full h-full border-none focus:outline-none placeholder:text-base bg-transparent pl-4'
+                    className=' hidden w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
                     onChange={handleFileChange}
 
 
@@ -267,7 +270,7 @@ function DetailsForm() {
                     name='about'
                     value={formData.about}
                     placeholder='Short Brief About you'
-                    className=' w-full h-full border-none focus:outline-none p-2 placeholder:text-base bg-[#254E7E17] pl-4'
+                    className=' w-full h-full border-none focus:outline-none p-2 placeholder:text-base text-base bg-[#254E7E17] pl-4'
                     onChange={handlechange}
 
 

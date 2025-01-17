@@ -2,24 +2,23 @@ import React, { useState } from "react";
 import DoneIcon from '@mui/icons-material/Done';
 
 
-const SharedButton = () =>{
+const SharedButton = ({onButtonClick,item, isActive}) =>{
 
-    const [selected , setSelected] = useState(false)
 
-   const handleclick = ( )=>{
-    setSelected(prevState=> !prevState)
-   }
+ 
 
     return (
-        <div className={`w-full  h-fit border-2 my-4 py-2 rounded-xl ${
-            selected
-                    ? " border-[#F66F4D] "
-                    : "border-[#747474]"
-        }`}>
+        <div className={`w-full  h-fit border-2 my-4 py-2 rounded-xl 
+         ${
+        isActive
+                ? " border-[#F66F4D] "
+                : "border-[#747474]"
+    }
+        `}>
             <button className={`w-full h-full flex items-center justify-center`}
-            onClick={handleclick}>
-                <span className={`${selected ? "text-[#F66F4D]" : "text-[#747474]"}`}>
-                    {selected ? "selected " : "select" }{selected ? <DoneIcon/> : ""}
+            onClick={()=>onButtonClick(item.id)}>
+                <span className={`${isActive ? "text-[#F66F4D]" : "text-[#747474]"}`}>
+                    {isActive ? "selected " : "select" }{isActive ? <DoneIcon/> : ""}
                 </span>
                 
 
@@ -28,6 +27,7 @@ const SharedButton = () =>{
 
         </div>
     )
+    //
 }
 
 export default SharedButton;

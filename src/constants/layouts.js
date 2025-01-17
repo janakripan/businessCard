@@ -10,21 +10,27 @@ import l6 from '../Assets/layout-6.png'
 export const layouts = [
 
     {
+        id:1,
         image:l4,
     },
     {
+        id:2,
         image:l2,
     },
     {
+        id:3,
         image:l3,
     },
     {
+        id:4,
         image:l4,
     },
     {
+        id:5,
         image:l5,
     },
     {
+        id:6,
         image:l6,
     },
 ]
