@@ -15,11 +15,11 @@ const SharedButton = ({onButtonClick,item, isActive}) =>{
                 : "border-[#747474]"
     }
         `}>
-            <button className={`w-full h-full flex items-center justify-center`}
+            <button className={`w-full   h-full flex items-center justify-center`}
             onClick={()=>onButtonClick(item.id)}>
-                <span className={ `transition-all duration-300 ${isActive ? "text-[#F66F4D]" : "text-[#747474]"}`}>
-                    {isActive ? "selected " : "select" }{isActive ? <DoneIcon/> : ""}
-                </span>
+                <div className={ `transition-all duration-300 ${isActive ? "text-[#F66F4D] " : "text-[#747474]"}`}>
+                    {isActive ? "selected " : "select" }{isActive ? <DoneIcon/> : null}
+                </div>
                 
 
             </button>

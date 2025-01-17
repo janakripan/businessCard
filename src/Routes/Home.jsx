@@ -7,7 +7,7 @@ function Home() {
   return (
     <div className='w-full h-fit  max-w-screen-xl mx-auto'>
 
-        <h1 className='text-9xl text-center font-bold pt-40 text-gray-900 font-public'>
+        <h1 className= 'px-4 text-5xl md:text-7xl lg:text-8xl text-center font-bold pt-40 text-gray-900 font-public'>
         Create Your Digital <br /> Business Card
         </h1>
         <img src={landing} className='mt-16 rounded-3xl ' alt="" />

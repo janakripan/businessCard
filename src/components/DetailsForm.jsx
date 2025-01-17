@@ -102,19 +102,19 @@ function DetailsForm() {
 
 
   return (
-    <div className='w-full h-fit flex flex-col items-center mt-48'>
+    <div className='w-full h-fit flex flex-col items-center mt-48 px-4'>
 
-        <h2 className=' text-4xl font-bold font-public  text-gray-800'>
+        <h2 className='text-xl md:text-3xl lg:text-4xl font-bold font-public  text-gray-800'>
             Fill Your Details
         </h2>
 
-        <p className='text-lg text-gray-800 font-public font-normal mt-2'>
+        <p className='md:text-lg text-center text-base text-gray-800 font-public font-normal mt-2'>
         Provide your information to generate your digital business card.
         </p>
 
-        <form action="submit" onSubmit={handleSubmit} className='w-8/12 flex flex-col gap-y-4 mt-16'>
-            <div className='w-full h-fit flex flex-row justify-between bg-transparent gap-4'>
-                <div className='flex flex-col items-center w-1/2 h-fit rounded-xl   '>
+        <form action="submit" onSubmit={handleSubmit} className='w-full px-4 md:w-8/12 flex flex-col gap-y-4 mt-16'>
+            <div className='w-full h-fit flex flex-col lg:flex-row lg:justify-between bg-transparent gap-4'>
+                <div className='flex flex-col items-center w-full lg:w-1/2 h-fit rounded-xl   '>
                     <div className=' w-full h-12 px-4 flex rounded-lg items-center bg-[#254E7E17]'>
                     <PersonIcon/>
                     
@@ -132,7 +132,7 @@ function DetailsForm() {
                     {errors?.userName&& <div className='w-full h-fit text-red-600 text-sm font-medium'> {errors?.userName} </div> } 
                 </div>
                 
-                <div className='flex flex-col items-center w-1/2 h-fit rounded-xl'>
+                <div className='flex flex-col items-center w-full lg:w-1/2 h-fit rounded-xl'>
                     <div className='w-full h-12 px-4 flex rounded-lg items-center bg-[#254E7E17]'>
                     <GiPoliceOfficerHead/>
                    
