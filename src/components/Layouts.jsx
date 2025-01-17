@@ -7,7 +7,7 @@ function Layouts() {
 
 
   const handleButtonclick = (id) =>{
-    setSelected(id===selected ? null : id )
+    setSelected( id )
 
 
 
