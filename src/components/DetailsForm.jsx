@@ -8,10 +8,22 @@ import { BiSolidLocationPlus } from "react-icons/bi";
 import { MdBusinessCenter } from "react-icons/md";
 import { BsPaperclip } from "react-icons/bs";
 import * as Yup from 'yup'
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 function DetailsForm() {
 
-    const [formData , SetFormData] = useState({
+    // const [formData , SetFormData] = useState({
+    //     userName:"",
+    //     job:"",
+    //     email:"",
+    //     phoneNumber:"",
+    //     whatsAppNumber:"",
+    //     locationLink:"",
+    //     businessName:"",
+    //     broucher:null,
+    //     about:'',
+    // })
+    const initialValues = {
         userName:"",
         job:"",
         email:"",
@@ -21,9 +33,9 @@ function DetailsForm() {
         businessName:"",
         broucher:null,
         about:'',
-    })
+    }
 
-    const [errors , setErrors] = useState()
+
 
     const validationSchema = Yup.object({
         userName: Yup.string().required("Name is requiired"),
@@ -56,48 +68,13 @@ function DetailsForm() {
 
     })
 
-    const handlechange = (e)=>{
-       
-
-        const { name , value }= e.target;
-        SetFormData({
-            ...formData,
-            [name] : value
-        })
-
-        setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: undefined,
-        }));
-        
-       
-    }
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        SetFormData({
-            ...formData,
-            broucher: file, 
-        });
-    };
-    const handleSubmit = async(e) => {
-        e.preventDefault()
-
-        try{
-            await validationSchema.validate(formData,{abortEarly: false})
-            console.log("form submitted", formData)
-        } catch (error){
-            const newError = {};
-
-            error.inner.forEach((err)=>{
-                newError[err.path] = err.message;
-        })
-        setErrors(newError)
-      console.log(newError)
-        }
-
-
-
-    }
+    
+    
+    const handleSubmit = (values) => {
+        // Example: Send data to API
+        console.log("Form data:", values);
+        alert("Form submitted successfully!");
+      };
 
 
 
@@ -112,183 +89,186 @@ function DetailsForm() {
         Provide your information to generate your digital business card.
         </p>
 
-        <form action="submit" onSubmit={handleSubmit} className='w-full px-4 md:w-8/12 flex flex-col gap-y-4 mt-16'>
-            <div className='w-full h-fit flex flex-col lg:flex-row lg:justify-between bg-transparent gap-4'>
-                <div className='flex flex-col items-center w-full lg:w-1/2 h-fit rounded-xl   '>
-                    <div className=' w-full h-12 px-4 flex rounded-lg items-center bg-[#254E7E17]'>
-                    <PersonIcon/>
-                    
-                    <label htmlFor="userName" className='sr-only'> userName</label>
-                    <input type="text"
-                    name='userName'
-                    value={formData.userName}
-                    placeholder='Full Name'
-                    className=' w-full h-full border-none focus:outline-none bg-transparent pl-4'
-                    onChange={handlechange}
-
-                    />
-                    </div>
-                    
-                    {errors?.userName&& <div className='w-full h-fit text-red-600 text-sm font-medium'> {errors?.userName} </div> } 
-                </div>
-                
-                <div className='flex flex-col items-center w-full lg:w-1/2 h-fit rounded-xl'>
-                    <div className='w-full h-12 px-4 flex rounded-lg items-center bg-[#254E7E17]'>
-                    <GiPoliceOfficerHead/>
-                   
-                    <label htmlFor="job" className='sr-only'> job</label>
-                    <input type="text"
-                    name='job'
-                    value={formData.job}
-                    placeholder='Profession / Position'
-                    className='  w-full h-full border-none focus:outline-none bg-transparent pl-4'
-                    onChange={handlechange}
-
-
-                    />
-                     </div>
-                    {errors?.job&& <div className='w-full h-fit text-red-600 text-sm font-medium'> {errors?.job} </div> }
-                </div>
-            </div>
-
-
-
-            <div className='w-full h-fit flex flex-col    '>
-                    <div className='h-12 w-full pl-4 text-2xl rounded-xl flex items-center bg-[#254E7E17]'>
-                    <BiLogoGmail/>
-                    
-                    <label htmlFor="email" className='sr-only'> email</label>
-                    <input type="email"
-                    name='email'
-                    value={formData.email}
-                    placeholder='E-mail'
-                    className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
-                    onChange={handlechange}
-
-                    />
-                    </div>
-                     {errors?.email&& <div className='w-full h-fit text-red-600 text-sm font-medium'> {errors?.email} </div> }
-                </div>
-                <div className='w-full flex flex-col  h-fit  '>
-                    <div className='h-12 w-full px-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
-                    <BiSolidContact/>
-                    
-                    <label htmlFor="phoneNumber" className='sr-only'> phoneNumber</label>
-                    <input type="tel"
-                    name='phoneNumber'
-                    value={formData.phoneNumber}
-                    placeholder='phoneNumber'
-                    className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base pl-4 bg-transparent'
-                    onChange={handlechange}
-
-
-                    />
-                    </div>
-                     {errors?.phoneNumber&& <div className='w-full h-fit text-red-600 text-sm font-medium'> {errors?.phoneNumber} </div> }
-                </div>
-                <div className='w-full flex flex-col  h-fit  '>
-                    <div className='h-12 w-full pl-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
-                    <IoLogoWhatsapp/>
-                    
-                    <label htmlFor="whatsAppNumber" className='sr-only'> whatsAppNumber</label>
-                    <input type="tel"
-                    name='whatsAppNumber'
-                    value={formData.whatsAppNumber}
-                    placeholder='WhatsApp Number'
-                    className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
-                    onChange={handlechange}
-
-
-                    />
-                    </div>
-                     {errors?.whatsAppNumber&& <div className='w-full h-fit text-red-600 text-sm font-medium'> {errors?.whatsAppNumber} </div> }
-                </div>
-                <div className='w-full flex flex-col  h-fit  overflow-hidden'>
-                    <div className='h-12 w-full pl-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
-                    <BiSolidLocationPlus/>
-                    
-                    <label htmlFor="locationLink" className='sr-only'> locationLink</label>
-                    <input type="url"
-                    name='locationLink'
-                    value={formData.locationLink}
-                    placeholder='Location Link'
-                    className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
-                    onChange={handlechange}
-
-
-                    />
-                    </div>
-                     {errors?.locationLink&& <div className='w-full h-fit text-red-600 text-sm font-medium'> {errors?.locationLink} </div> }
-                </div>
-                <div className='w-full flex flex-col  h-fit  '>
-                    <div className='h-12 w-full px-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
-                    <MdBusinessCenter/>
-                    
-                    <label htmlFor="businessName" className='sr-only'> businessName</label>
-                    <input type="text"
-                    name='businessName'
-                    value={formData.businessName}
-                    placeholder='Business Name'
-                    className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
-                    onChange={handlechange}
-
-
-                    />
-                    </div>
-                     {errors?.businessName&& <div className='w-full h-fit text-red-600 text-sm font-medium'> {errors?.businessName} </div> }
-                </div>
-                <div className='w-full flex flex-col items-end justify-end h-fit overflow-hidden'>
-                    
-                   <div className='w-fit h-12 rounded-xl flex '>
-                   <label htmlFor="broucher" className='cursor-pointer flex items-center rounded-l-xl justify-center text-gray-400 bg-[#254E7E17]  font-normal py-2 px-4   transition duration-200"'>
-                    Upload your Broucher
-                         </label>
-                    <input type="file"
-                    id='broucher'
-                    name='broucher'
-                    placeholder='Upload your Broucher'
-                    className=' hidden w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
-                    onChange={handleFileChange}
-
-
-                    />
+       <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+       >
+        {({setFieldValue})=>(
+             <Form  className='w-full px-4 md:w-8/12 flex flex-col gap-y-4 mt-16'>
+             <div className='w-full h-fit flex flex-col lg:flex-row lg:justify-between bg-transparent gap-4'>
+                 <div className='flex flex-col items-center w-full lg:w-1/2 h-fit rounded-xl   '>
+                     <div className=' w-full h-12 px-4 flex rounded-lg items-center bg-[#254E7E17]'>
+                     <PersonIcon/>
                      
-                    <div className='h-full w-fit pr-4 text-2xl rounded-r-xl flex items-center bg-[#254E7E17]'>
-                    <BsPaperclip/>
-                    </div>
-                   </div>
-                   {errors?.broucher&& <div className='w-fit  h-fit text-red-600 text-sm font-medium'> {errors?.broucher} </div> }
+                     <Field type="text"
+                     name='userName'
+                     placeholder='Full Name'
+                     className=' w-full h-full border-none focus:outline-none bg-transparent pl-4'
                     
-                </div> 
-                
-                <div className='w-full h-fit '>
+ 
+                     />
+                     </div>
+                     
+                     <ErrorMessage name="userName" component="div" className="text-red-600 text-sm" /> 
+                 </div>
+                 
+                 <div className='flex flex-col items-center w-full lg:w-1/2 h-fit rounded-xl'>
+                     <div className='w-full h-12 px-4 flex rounded-lg items-center bg-[#254E7E17]'>
+                     <GiPoliceOfficerHead/>
                     
-                    <div className='w-full  h-40 rounded-xl overflow-hidden '>
-                    <label htmlFor="about" className='sr-only'> about</label>
-                    <textarea
-                     type=""
-                    name='about'
-                    value={formData.about}
-                    placeholder='Short Brief About you'
-                    className=' w-full h-full border-none focus:outline-none p-2 placeholder:text-base text-base bg-[#254E7E17] pl-4'
-                    onChange={handlechange}
-
-
-                    />
+                     
+                     <Field type="text"
+                     name='job'
+                     
+                     placeholder='Profession / Position'
+                     className='  w-full h-full border-none focus:outline-none bg-transparent pl-4'
+                     
+ 
+ 
+                     />
+                      </div>
+                      <ErrorMessage name="job" component="div" className="text-red-600 text-sm" /> 
+                 </div>
+             </div>
+ 
+ 
+ 
+             <div className='w-full h-fit flex flex-col    '>
+                     <div className='h-12 w-full pl-4 text-2xl rounded-xl flex items-center bg-[#254E7E17]'>
+                     <BiLogoGmail/>
+                     
+                    
+                     <Field type="email"
+                     name='email'
+                     
+                     placeholder='E-mail'
+                     className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
+                    
+ 
+                     />
+                     </div>
+                     <ErrorMessage name="email" component="div" className="text-red-600 text-sm" /> 
+                 </div>
+                 <div className='w-full flex flex-col  h-fit  '>
+                     <div className='h-12 w-full px-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
+                     <BiSolidContact/>
+                     
+                   
+                     <Field type="tel"
+                     name='phoneNumber'
+                     
+                     placeholder='phoneNumber'
+                     className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base pl-4 bg-transparent'
+                     
+ 
+ 
+                     />
+                     </div>
+                     <ErrorMessage name="phoneNumber" component="div" className="text-red-600 text-sm" /> 
+                 </div>
+                 <div className='w-full flex flex-col  h-fit  '>
+                     <div className='h-12 w-full pl-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
+                     <IoLogoWhatsapp/>
+                     
+                     
+                     <Field type="tel"
+                     name='whatsAppNumber'
+                     
+                     placeholder='WhatsApp Number'
+                     className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
+                     
+ 
+                     />
+                     </div>
+                     <ErrorMessage name="whatsAppNumber" component="div" className="text-red-600 text-sm" /> 
+                 </div>
+                 <div className='w-full flex flex-col  h-fit  overflow-hidden'>
+                     <div className='h-12 w-full pl-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
+                     <BiSolidLocationPlus/>
+                     
+                     
+                     <Field type="url"
+                     name='locationLink'
+                     
+                     placeholder='Location Link'
+                     className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
+                     
+ 
+ 
+                     />
+                     </div>
+                     <ErrorMessage name="locationLink" component="div" className="text-red-600 text-sm" />
+                 </div>
+                 <div className='w-full flex flex-col  h-fit  '>
+                     <div className='h-12 w-full px-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
+                     <MdBusinessCenter/>
+                     
+                     
+                     <Field type="text"
+                     name='businessName'
+                    
+                     placeholder='Business Name'
+                     className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
+                    
+ 
+ 
+                     />
+                     </div>
+                     <ErrorMessage name="businessName" component="div" className="text-red-600 text-sm" />
+                 </div>
+                 <div className='w-full flex flex-col items-end justify-end h-fit overflow-hidden'>
+                     
+                    <div className='w-fit h-12 rounded-xl flex '>
+                   
+                    <label htmlFor="broucher" className="cursor-pointer flex items-center bg-[#254E7E17] px-4 rounded-l-lg">
+                         Upload your Broucher
+                     </label>
+                     <input
+                      type="file"
+                      id="broucher"
+                      className="hidden"
+                      onChange={(e) => setFieldValue("broucher", e.target.files[0])}
+                     />
+                      
+                     <div className='h-full w-fit pr-4 text-2xl rounded-r-xl flex items-center bg-[#254E7E17]'>
+                     <BsPaperclip/>
+                     </div>
                     </div>
-                     {errors?.about&& <div className='w-full h-fit text-red-600 text-sm font-medium'> {errors?.about} </div> }
-                </div>
-
-                <button className='w-full mt-12 h-14 bg-[#F66F4D]  text-white text-2xl rounded-xl mb-32 hover:scale-105 transition-all duration-300 '
-                type='submit'
-                
-                >
-                    Generate
-                </button>
-
-
-        </form>
-
+                    <ErrorMessage name="broucher" component="div" className="text-red-600 text-sm" />
+                     
+                 </div> 
+                 
+                 <div className='w-full h-fit '>
+                     
+                     <div className='w-full  h-40 rounded-xl overflow-hidden '>
+                     <label htmlFor="about" className='sr-only'> about </label>
+                     <Field
+                      as="textarea"
+                     name='about'
+                     
+                     placeholder='Short Brief About you'
+                     className=' w-full h-full border-none focus:outline-none p-2 placeholder:text-base text-base bg-[#254E7E17] pl-4'
+                     
+ 
+ 
+                     />
+                     </div>
+                     <ErrorMessage name="about" component="div" className="text-red-600 text-sm" />
+                 </div>
+ 
+                 <button className='w-full mt-12 h-14 bg-[#F66F4D]  text-white text-2xl rounded-xl mb-32 hover:scale-105 transition-all duration-300 '
+                 type="submit"
+                 
+                 >
+                     Generate
+                 </button>
+ 
+ 
+         </Form>
+ 
+        )}
+       </Formik>
       
     </div>
   )
