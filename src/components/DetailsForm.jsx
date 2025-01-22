@@ -12,17 +12,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 function DetailsForm() {
 
-    // const [formData , SetFormData] = useState({
-    //     userName:"",
-    //     job:"",
-    //     email:"",
-    //     phoneNumber:"",
-    //     whatsAppNumber:"",
-    //     locationLink:"",
-    //     businessName:"",
-    //     broucher:null,
-    //     about:'',
-    // })
+   
     const initialValues = {
         userName:"",
         job:"",
@@ -71,7 +61,7 @@ function DetailsForm() {
     
     
     const handleSubmit = (values) => {
-        // Example: Send data to API
+        
         console.log("Form data:", values);
         alert("Form submitted successfully!");
       };
@@ -100,14 +90,11 @@ function DetailsForm() {
                  <div className='flex flex-col items-center w-full lg:w-1/2 h-fit rounded-xl   '>
                      <div className=' w-full h-12 px-4 flex rounded-lg items-center bg-[#254E7E17]'>
                      <PersonIcon/>
-                     
                      <Field type="text"
                      name='userName'
                      placeholder='Full Name'
                      className=' w-full h-full border-none focus:outline-none bg-transparent pl-4'
-                    
- 
-                     />
+                      />
                      </div>
                      
                      <ErrorMessage name="userName" component="div" className="text-red-600 text-sm" /> 
@@ -116,16 +103,10 @@ function DetailsForm() {
                  <div className='flex flex-col items-center w-full lg:w-1/2 h-fit rounded-xl'>
                      <div className='w-full h-12 px-4 flex rounded-lg items-center bg-[#254E7E17]'>
                      <GiPoliceOfficerHead/>
-                    
-                     
                      <Field type="text"
                      name='job'
-                     
                      placeholder='Profession / Position'
                      className='  w-full h-full border-none focus:outline-none bg-transparent pl-4'
-                     
- 
- 
                      />
                       </div>
                       <ErrorMessage name="job" component="div" className="text-red-600 text-sm" /> 
@@ -137,65 +118,55 @@ function DetailsForm() {
              <div className='w-full h-fit flex flex-col    '>
                      <div className='h-12 w-full pl-4 text-2xl rounded-xl flex items-center bg-[#254E7E17]'>
                      <BiLogoGmail/>
-                     
-                    
                      <Field type="email"
                      name='email'
-                     
                      placeholder='E-mail'
                      className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
-                    
- 
                      />
                      </div>
                      <ErrorMessage name="email" component="div" className="text-red-600 text-sm" /> 
                  </div>
+
+
                  <div className='w-full flex flex-col  h-fit  '>
                      <div className='h-12 w-full px-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
                      <BiSolidContact/>
-                     
-                   
                      <Field type="tel"
                      name='phoneNumber'
-                     
-                     placeholder='phoneNumber'
-                     className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base pl-4 bg-transparent'
-                     
- 
- 
-                     />
+                     placeholder='PhoneNumber'
+                     onInput={(e) => {
+                        e.target.value = e.target.value.replace(/\D/g, ""); // Allow only digits
+                      }}
+                    className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base pl-4 bg-transparent'
+                    />
                      </div>
                      <ErrorMessage name="phoneNumber" component="div" className="text-red-600 text-sm" /> 
                  </div>
+
+
                  <div className='w-full flex flex-col  h-fit  '>
                      <div className='h-12 w-full pl-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
                      <IoLogoWhatsapp/>
-                     
-                     
                      <Field type="tel"
                      name='whatsAppNumber'
-                     
                      placeholder='WhatsApp Number'
-                     className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
-                     
- 
-                     />
+                     onInput={(e) => {
+                        e.target.value = e.target.value.replace(/\D/g, ""); // Allow only digits
+                      }}
+                     className='  w-full h-full border-none focus:outline-none placeholder:text-base text-base pl-4 bg-transparent'
+                      />
                      </div>
                      <ErrorMessage name="whatsAppNumber" component="div" className="text-red-600 text-sm" /> 
                  </div>
+
+
                  <div className='w-full flex flex-col  h-fit  overflow-hidden'>
                      <div className='h-12 w-full pl-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
                      <BiSolidLocationPlus/>
-                     
-                     
                      <Field type="url"
                      name='locationLink'
-                     
                      placeholder='Location Link'
                      className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
-                     
- 
- 
                      />
                      </div>
                      <ErrorMessage name="locationLink" component="div" className="text-red-600 text-sm" />
@@ -246,18 +217,14 @@ function DetailsForm() {
                      <Field
                       as="textarea"
                      name='about'
-                     
                      placeholder='Short Brief About you'
                      className=' w-full h-full border-none focus:outline-none p-2 placeholder:text-base text-base bg-[#254E7E17] pl-4'
-                     
- 
- 
                      />
                      </div>
                      <ErrorMessage name="about" component="div" className="text-red-600 text-sm" />
                  </div>
  
-                 <button className='w-full mt-12 h-14 bg-[#F66F4D]  text-white text-2xl rounded-xl mb-32 hover:scale-105 transition-all duration-300 '
+                 <button className='w-full mt-12 h-14 bg-[#F66F4D] active:scale-95 active:bg-[#FA8C6A] text-white text-2xl rounded-xl mb-32 hover:scale-105 transition-all duration-300 '
                  type="submit"
                  
                  >

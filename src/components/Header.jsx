@@ -15,7 +15,7 @@ function Header() {
                 </h5>
             </div>
             <div>
-                <button className=' bg-[#31C3E0] scale-75 md:scale-100  px-6 py-3 text-white text-base font-inter font-medium rounded-lg hover:bg-[#89DCED] hover:scale-105 transition-all duration-300 '>
+                <button className=' bg-[#31C3E0] scale-75 md:scale-100  px-6 py-3 text-white text-base font-inter font-medium rounded-lg active:bg-[#89DCED] active:scale-90 hover:scale-105 transition-all duration-300 '>
 
                     Contact Us
 
