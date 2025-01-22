@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PersonIcon from '@mui/icons-material/Person';
 import { GiPoliceOfficerHead } from "react-icons/gi";
 import { BiLogoGmail } from "react-icons/bi";
@@ -35,15 +35,19 @@ function DetailsForm() {
     }
 
 
-
+    useEffect(() => {
+        if (data !== null) {
+          console.log("Data updated:", data);
+        }
+      }, [data]); 
     
     
     
     const handleSubmit = (values,{ resetForm,setFieldValue }) => {
         
-        // console.log("Form data:", values);
+        
         setData(values)
-        console.log(data)
+        
         alert("Form submitted successfully!");
 
         setFieldValue("broucher", null); 
@@ -248,8 +252,8 @@ function DetailsForm() {
                 </div>
                         
                  )}
-                 <div className='w-full h-fit flex flex-row items-center justify-between gap-3 '>
-                    <div className='w-1/2 flex flex-col h-fit'>
+                 <div className='w-full h-fit flex flex-col md:flex-row items-center justify-between gap-3 '>
+                    <div className='w-full md:w-1/2 flex flex-col h-fit'>
                         <div className='h-12 w-full pl-4 text-2xl rounded-xl flex items-center bg-[#254E7E17] px-4'>
                              <Field
                              name="country" as="select" value={values.country} className="w-full text-base h-full border-none focus:outline-none bg-transparent "
@@ -267,7 +271,7 @@ function DetailsForm() {
                     </div>
 
 
-                    <div className="w-1/2 flex flex-col  justify-center gap-2 mb-4 px-4">
+                    <div className=" w-full md:w-1/2 flex flex-col  justify-center gap-2 mb-4 px-4">
                         <label className="text-gray-700 font-medium">Gender</label>
                         <div role="group" aria-labelledby="gender-radio-group" className="flex gap-4 mt-2">
                         <div>
