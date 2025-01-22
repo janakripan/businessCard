@@ -7,11 +7,18 @@ import { IoLogoWhatsapp } from "react-icons/io";
 import { BiSolidLocationPlus } from "react-icons/bi";
 import { MdBusinessCenter } from "react-icons/md";
 import { BsPaperclip } from "react-icons/bs";
-import * as Yup from 'yup'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { IoIosCloseCircle } from "react-icons/io";
+import { countries } from '../constants/countries';
+import { validationSchema } from '../validations/DetailsFormSchema';
 
 function DetailsForm() {
 
+    const [brochurePreview, setBrochurePreview] = useState(null)
+
+    const [data , setData] = useState(null)
+
+    
    
     const initialValues = {
         userName:"",
@@ -23,48 +30,47 @@ function DetailsForm() {
         businessName:"",
         broucher:null,
         about:'',
+        country:'',
+        gender:'',
     }
 
 
 
-    const validationSchema = Yup.object({
-        userName: Yup.string().required("Name is requiired"),
-        job: Yup.string().required("Job name is requiired"),
-        email: Yup.string().required("E-mail is requiired").email("Invalid E-mail"),
-        phoneNumber: Yup.string()
-                .matches(/^\d{10}$/, "phone number must be 10 digits")
-                .required("phone number is requiired"),
-        whatsAppNumber: Yup.string()
-                .matches(/^\d{10}$/, "phone number must be 10 digits")
-                .required("whatsapp number is requiired"),
-        locationLink: Yup.string()
-        .url("Must be a valid URL") 
-        .matches(
-          /^(https?:\/\/)?(www\.)?(google\.com\/maps|goo\.gl\/maps)/,
-          "Must be a valid Google Maps link"
-        )
-        .required("Location link is required"),
-        businessName: Yup.string().required("business name is requiired"),
-        broucher:Yup.mixed()
-        .test(
-          "fileType",
-          "Unsupported file format. Only JPG, PNG, and PDF are allowed.",
-          (value) =>
-            value &&
-            ["image/jpeg", "image/png", "application/pdf"].includes(value.type)
-        ),
-        about: Yup.string().required("brief is required"),
-
-
-    })
-
     
     
-    const handleSubmit = (values) => {
+    
+    const handleSubmit = (values,{ resetForm,setFieldValue }) => {
         
-        console.log("Form data:", values);
+        // console.log("Form data:", values);
+        setData(values)
+        console.log(data)
         alert("Form submitted successfully!");
+
+        setFieldValue("broucher", null); 
+        setBrochurePreview(null);
+
+        resetForm()
+        
       };
+
+      const handleFileChange = (e, setFieldValue) => {
+        const file = e.target.files[0];
+        if (file) {
+            setFieldValue('broucher', file);
+        
+
+        const fileReader = new FileReader()
+        fileReader.onloadend= () => {
+            setBrochurePreview(fileReader.result);
+        }
+        fileReader.readAsDataURL(file);
+      }
+    }
+
+    const handleDelete = (setFieldValue) =>{
+        setFieldValue('broucher', null);
+        setBrochurePreview(null);
+    }
 
 
 
@@ -84,10 +90,10 @@ function DetailsForm() {
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
        >
-        {({setFieldValue})=>(
+        {({setFieldValue, values})=>(
              <Form  className='w-full px-4 md:w-8/12 flex flex-col gap-y-4 mt-16'>
              <div className='w-full h-fit flex flex-col lg:flex-row lg:justify-between bg-transparent gap-4'>
-                 <div className='flex flex-col items-center w-full lg:w-1/2 h-fit rounded-xl   '>
+                 <div className='flex flex-col  w-full lg:w-1/2 h-fit rounded-xl   '>
                      <div className=' w-full h-12 px-4 flex rounded-lg items-center bg-[#254E7E17]'>
                      <PersonIcon/>
                      <Field type="text"
@@ -100,7 +106,7 @@ function DetailsForm() {
                      <ErrorMessage name="userName" component="div" className="text-red-600 text-sm" /> 
                  </div>
                  
-                 <div className='flex flex-col items-center w-full lg:w-1/2 h-fit rounded-xl'>
+                 <div className='flex flex-col  w-full lg:w-1/2 h-fit rounded-xl'>
                      <div className='w-full h-12 px-4 flex rounded-lg items-center bg-[#254E7E17]'>
                      <GiPoliceOfficerHead/>
                      <Field type="text"
@@ -135,7 +141,7 @@ function DetailsForm() {
                      name='phoneNumber'
                      placeholder='PhoneNumber'
                      onInput={(e) => {
-                        e.target.value = e.target.value.replace(/\D/g, ""); // Allow only digits
+                        e.target.value = e.target.value.replace(/\D/g, "");
                       }}
                     className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base pl-4 bg-transparent'
                     />
@@ -151,7 +157,7 @@ function DetailsForm() {
                      name='whatsAppNumber'
                      placeholder='WhatsApp Number'
                      onInput={(e) => {
-                        e.target.value = e.target.value.replace(/\D/g, ""); // Allow only digits
+                        e.target.value = e.target.value.replace(/\D/g, ""); 
                       }}
                      className='  w-full h-full border-none focus:outline-none placeholder:text-base text-base pl-4 bg-transparent'
                       />
@@ -188,18 +194,20 @@ function DetailsForm() {
                      </div>
                      <ErrorMessage name="businessName" component="div" className="text-red-600 text-sm" />
                  </div>
-                 <div className='w-full flex flex-col items-end justify-end h-fit overflow-hidden'>
+
+
+                 {!brochurePreview && (<div className='w-full flex flex-col items-end justify-end h-fit overflow-hidden'>
                      
                     <div className='w-fit h-12 rounded-xl flex '>
                    
-                    <label htmlFor="broucher" className="cursor-pointer flex items-center bg-[#254E7E17] px-4 rounded-l-lg">
+                    <label htmlFor="broucher" className="cursor-pointer flex items-center bg-[#254E7E17] px-4 text-gray-400 rounded-l-lg">
                          Upload your Broucher
                      </label>
                      <input
                       type="file"
                       id="broucher"
                       className="hidden"
-                      onChange={(e) => setFieldValue("broucher", e.target.files[0])}
+                      onChange={(e) => handleFileChange(e, setFieldValue)}
                      />
                       
                      <div className='h-full w-fit pr-4 text-2xl rounded-r-xl flex items-center bg-[#254E7E17]'>
@@ -208,7 +216,94 @@ function DetailsForm() {
                     </div>
                     <ErrorMessage name="broucher" component="div" className="text-red-600 text-sm" />
                      
-                 </div> 
+                 </div> )}
+                 {brochurePreview&&(
+                    <div className='w-full h-fit flex justify-end'>
+                        <div className="w-fit mt-4 flex flex-col ">
+                    <p className="text-sm text-gray-600 mb-2 ">Preview:</p>
+                    <div className="flex items-end justify-end flex-col gap-3">
+                      {brochurePreview.includes('data:image') ? (
+                        <img
+                          src={brochurePreview}
+                          alt="Brochure Preview"
+                          className="w-32 h-32 object-contain border-2 border-gray-300 rounded-md"
+                        />
+                      ) : (
+                        <embed
+                          src={brochurePreview}
+                          type="application/pdf"
+                          width="300"
+                          height="200"
+                        />
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(setFieldValue)} // Handle delete file
+                      className="text-red-500 text-sm"
+                    >
+                     <IoIosCloseCircle style={{ fontSize: "30px"}} />
+                    </button>
+                  </div>
+                </div>
+                </div>
+                        
+                 )}
+                 <div className='w-full h-fit flex flex-row items-center justify-between gap-3 '>
+                    <div className='w-1/2 flex flex-col h-fit'>
+                        <div className='h-12 w-full pl-4 text-2xl rounded-xl flex items-center bg-[#254E7E17] px-4'>
+                             <Field
+                             name="country" as="select" value={values.country} className="w-full text-base h-full border-none focus:outline-none bg-transparent "
+                                >
+                                     <option value="" disabled selected >Select a Country</option>
+                                        {countries.map((country) => (
+                                        <option key={country.id} value={country.id} label={country.name}/>
+                                        
+                                        
+                                    ))}
+                            </Field>
+
+                        </div>
+                        <ErrorMessage name="country" component="div" className="text-red-600 text-sm" />
+                    </div>
+
+
+                    <div className="w-1/2 flex flex-col  justify-center gap-2 mb-4 px-4">
+                        <label className="text-gray-700 font-medium">Gender</label>
+                        <div role="group" aria-labelledby="gender-radio-group" className="flex gap-4 mt-2">
+                        <div>
+                        <Field
+                         type="radio"
+                         id="male"
+                         name="gender"
+                         value="male"
+                         className="mr-2"
+                         />
+                        <label htmlFor="male" className="text-gray-600">Male</label>
+                        </div>
+                        <div>
+                        <Field
+                        type="radio"
+                        id="female"
+                        name="gender"
+                        value="female"
+                        className="mr-2"
+                         />
+                            <label htmlFor="female" className="text-gray-600">Female</label>
+                        </div>
+                        <div>
+                         <Field
+                             type="radio"
+                             id="other"
+                             name="gender"
+                             value="other"
+                            className="mr-2"
+                            />
+                             <label htmlFor="other" className="text-gray-600">Other</label>
+                        </div>
+                    </div>
+                        <ErrorMessage name="gender" component="div" className="text-red-600 text-sm" />
+                    </div>
+                 </div>
                  
                  <div className='w-full h-fit '>
                      
