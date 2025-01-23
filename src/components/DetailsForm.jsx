@@ -222,15 +222,24 @@ function DetailsForm() {
                      
                  </div> )}
                  {brochurePreview&&(
-                    <div className='w-full h-fit flex justify-end'>
+                    <div className='w-full h-fit flex justify-center mb-4'>
                         <div className="w-fit mt-4 flex flex-col ">
+                    <div className=' flex justify-between w-full mb-2 items-center'>
                     <p className="text-sm text-gray-600 mb-2 ">Preview:</p>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(setFieldValue)} 
+                      className="text-red-500 text-sm"
+                    >
+                     <IoIosCloseCircle style={{ fontSize: "30px"}} />
+                    </button>
+                    </div>
                     <div className="flex items-end justify-end flex-col gap-3">
                       {brochurePreview.includes('data:image') ? (
                         <img
                           src={brochurePreview}
                           alt="Brochure Preview"
-                          className="w-32 h-32 object-contain border-2 border-gray-300 rounded-md"
+                          className="w-44 h-44 object-contain border-2 border-gray-300 rounded-md"
                         />
                       ) : (
                         <embed
@@ -240,13 +249,7 @@ function DetailsForm() {
                           height="200"
                         />
                     )}
-                    <button
-                      type="button"
-                      onClick={() => handleDelete(setFieldValue)} // Handle delete file
-                      className="text-red-500 text-sm"
-                    >
-                     <IoIosCloseCircle style={{ fontSize: "30px"}} />
-                    </button>
+                    
                   </div>
                 </div>
                 </div>
