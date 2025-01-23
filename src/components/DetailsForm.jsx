@@ -14,7 +14,7 @@ import { validationSchema } from '../validations/DetailsFormSchema';
 
 function DetailsForm() {
 
-    const [brochurePreview, setBrochurePreview] = useState(null)
+    const [brochurePreview, setBrochurePreview] = useState([])
 
     const [data , setData] = useState(null)
 
@@ -28,7 +28,7 @@ function DetailsForm() {
         whatsAppNumber:"",
         locationLink:"",
         businessName:"",
-        broucher:null,
+        broucher:[],
         about:'',
         country:'',
         gender:'',
@@ -58,24 +58,24 @@ function DetailsForm() {
       };
 
       const handleFileChange = (e, setFieldValue) => {
-        const file = e.target.files[0];
-        if (file) {
-            setFieldValue('broucher', file);
-        
+        const files = Array.from(e.target.files)
+        const newPreviews = files.map((file) => {
+          return URL.createObjectURL(file);
+        });
 
-        const fileReader = new FileReader()
-        fileReader.onloadend= () => {
-            setBrochurePreview(fileReader.result);
-        }
-        fileReader.readAsDataURL(file);
-      }
+        setFieldValue("broucher", files); // Set files in Formik state
+        setBrochurePreview((prev) => [...prev, ...newPreviews])
+  
+          
+       
     }
 
-    const handleDelete = (setFieldValue) =>{
-        setFieldValue('broucher', null);
-        setBrochurePreview(null);
-    }
-
+    const handleDelete = (index, setFieldValue) => {
+      setBrochurePreview((prev) => prev.filter((_, i) => i !== index)); // Remove preview
+      setFieldValue("broucher", (prev) =>
+        prev.filter((_, i) => i !== index)
+      ); // Remove file from Formik state
+    };
 
 
   return (
@@ -200,7 +200,7 @@ function DetailsForm() {
                  </div>
 
 
-                 {!brochurePreview && (<div className='w-full flex flex-col items-end justify-end h-fit overflow-hidden'>
+                 <div className='w-full flex flex-col items-end justify-end h-fit overflow-hidden'>
                      
                     <div className='w-fit h-12 rounded-xl flex '>
                    
@@ -211,6 +211,7 @@ function DetailsForm() {
                       type="file"
                       id="broucher"
                       className="hidden"
+                      multiple
                       onChange={(e) => handleFileChange(e, setFieldValue)}
                      />
                       
@@ -220,38 +221,42 @@ function DetailsForm() {
                     </div>
                     <ErrorMessage name="broucher" component="div" className="text-red-600 text-sm" />
                      
-                 </div> )}
-                 {brochurePreview&&(
-                    <div className='w-full h-fit flex justify-center mb-4'>
-                        <div className="w-fit mt-4 flex flex-col ">
-                    <div className=' flex justify-between w-full mb-2 items-center'>
-                    <p className="text-sm text-gray-600 mb-2 ">Preview:</p>
-                    <button
-                      type="button"
-                      onClick={() => handleDelete(setFieldValue)} 
-                      className="text-red-500 text-sm"
-                    >
-                     <IoIosCloseCircle style={{ fontSize: "30px"}} />
-                    </button>
-                    </div>
-                    <div className="flex items-end justify-end flex-col gap-3">
-                      {brochurePreview.includes('data:image') ? (
-                        <img
-                          src={brochurePreview}
-                          alt="Brochure Preview"
-                          className="w-44 h-44 object-contain border-2 border-gray-300 rounded-md"
-                        />
-                      ) : (
-                        <embed
-                          src={brochurePreview}
-                          type="application/pdf"
-                          width="300"
-                          height="200"
-                        />
-                    )}
-                    
-                  </div>
-                </div>
+                 </div> 
+                 {brochurePreview?.length > 0 &&(
+                    <div className='w-full h-fit flex justify-center mb-4 overflow-x-scroll'>
+                        {brochurePreview.map((preview,index)=>(
+                          <div
+                          key={index}
+                           className="w-fit mt-4 flex flex-col mx-2 ">
+                          <div className=' flex justify-between w-full mb-2 items-center'>
+                          <p className="text-sm text-gray-600 mb-2 ">Preview:</p>
+                          <button
+                            type="button"
+                            onClick={() => handleDelete(index,setFieldValue)} 
+                            className="text-red-500 text-sm"
+                          >
+                           <IoIosCloseCircle style={{ fontSize: "30px"}} />
+                          </button>
+                          </div>
+                          <div className="flex items-end justify-end flex-col gap-3">
+                            {brochurePreview.includes('data:image') ? (
+                              <img
+                              src={preview}
+                              alt={`Brochure Preview ${index + 1}`}
+                                className="w-44 h-44 object-contain border-2 border-gray-300 rounded-md"
+                              />
+                            ) : (
+                              <embed
+                              src={preview}
+                                type="application/pdf"
+                                width="300"
+                                height="200"
+                              />
+                          )}
+                          
+                        </div>
+                      </div>
+                        ))}
                 </div>
                         
                  )}

@@ -15,18 +15,26 @@ export const validationSchema = Yup.object({
   locationLink: Yup.string()
   .url("Must be a valid URL") 
   .matches(
-    /^(https?:\/\/)?(www\.)?(google\.com\/maps|goo\.gl\/maps)/,
-    "Must be a valid Google Maps link"
+    /^(https?:\/\/)?(www\.)?(google\.com\/maps|goo\.gl\/maps|maps\.app\.goo\.gl)/,
+    "Must be a valid Google Maps link or shared location"
   )
   .required("Location link is required"),
   businessName: Yup.string().required("business name is requiired"),
-  broucher:Yup.mixed()
+  broucher: Yup.array()
+  .of(
+    Yup.mixed().test(
+      "fileType",
+      "Unsupported file format. Only JPG, PNG, and PDF are allowed.",
+      (value) => {
+        if (!value) return false; // Ensure no empty file is uploaded
+        return ["image/jpeg", "image/png", "application/pdf"].includes(value.type);
+      }
+    )
+  )
   .test(
-    "fileType",
-    "Unsupported file format. Only JPG, PNG, and PDF are allowed.",
-    (value) =>
-      value &&
-      ["image/jpeg", "image/png", "application/pdf"].includes(value.type)
+    "fileCount",
+    "You can upload up to 3 files only.",
+    (files) => !files || files.length <= 3
   ),
   about: Yup.string().required("brief is required"),
   country: Yup.string()
