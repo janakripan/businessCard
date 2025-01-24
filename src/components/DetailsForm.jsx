@@ -1,351 +1,302 @@
-import React, { useEffect, useState } from 'react'
-import PersonIcon from '@mui/icons-material/Person';
-import { GiPoliceOfficerHead } from "react-icons/gi";
-import { BiLogoGmail } from "react-icons/bi";
-import { BiSolidContact } from "react-icons/bi";
-import { IoLogoWhatsapp } from "react-icons/io";
-import { BiSolidLocationPlus } from "react-icons/bi";
-import { MdBusinessCenter } from "react-icons/md";
+import React, { useEffect, useState } from "react";
+
 import { BsPaperclip } from "react-icons/bs";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { IoIosCloseCircle } from "react-icons/io";
-import { countries } from '../constants/countries';
-import { validationSchema } from '../validations/DetailsFormSchema';
+import { countries } from "../constants/countries";
+import { validationSchema } from "../validations/DetailsFormSchema";
+import NameField from "./DetailFormParts/NameField";
 
 function DetailsForm() {
+  //state variables
+  const [brochurePreview, setBrochurePreview] = useState([]);
 
-    const [brochurePreview, setBrochurePreview] = useState([])
+  const [data, setData] = useState(null);
 
-    const [data , setData] = useState(null)
+  const initialValues = {
+    userName: "",
+    job: "",
+    email: "",
+    phoneNumber: "",
+    whatsAppNumber: "",
+    locationLink: "",
+    businessName: "",
+    broucher: [],
+    about: "",
+    country: "",
+    gender: "",
+  };
 
-    
-   
-    const initialValues = {
-        userName:"",
-        job:"",
-        email:"",
-        phoneNumber:"",
-        whatsAppNumber:"",
-        locationLink:"",
-        businessName:"",
-        broucher:[],
-        about:'',
-        country:'',
-        gender:'',
+  //console outputs
+
+  useEffect(() => {
+    if (data !== null) {
+      console.log("Data updated:", data);
     }
+  }, [data]);
 
-
-    useEffect(() => {
-        if (data !== null) {
-          console.log("Data updated:", data);
-        }
-      }, [data]); 
-    
-    
-    
-    const handleSubmit = (values,{ resetForm,setFieldValue }) => {
-        
-        
-        setData(values)
-        
-        alert("Form submitted successfully!");
-
-        setFieldValue("broucher", null); 
-        setBrochurePreview(null);
-
-        resetForm()
-        
-      };
-
-      const handleFileChange = (e, setFieldValue) => {
-        const files = Array.from(e.target.files)
-        const newPreviews = files.map((file) => {
-          return URL.createObjectURL(file);
-        });
-
-        setFieldValue("broucher", files); // Set files in Formik state
-        setBrochurePreview((prev) => [...prev, ...newPreviews])
-  
-          
-       
+  useEffect(() => {
+    if (brochurePreview !== null) {
+      console.log(brochurePreview);
     }
+  }, [brochurePreview]);
 
-    const handleDelete = (index, setFieldValue) => {
-      setBrochurePreview((prev) => prev.filter((_, i) => i !== index)); // Remove preview
-      setFieldValue("broucher", (prev) =>
-        prev.filter((_, i) => i !== index)
-      ); // Remove file from Formik state
+  //handle submit function
+
+  const handleSubmit = (values, { resetForm, setFieldValue }) => {
+    setData(values);
+
+    alert("Form submitted successfully!");
+
+    setFieldValue("broucher", []);
+
+    setBrochurePreview([]);
+
+    resetForm();
+  };
+
+  //handle change for broucher files
+
+  const handleFileChange = (e, setFieldValue, values) => {
+    const files = Array.from(e.target.files);
+
+    const something = () => {
+      const currentFiles = values.broucher || [];
+      const totalFiles = [...currentFiles, ...files];
+
+      if (totalFiles.length > 3) {
+        alert("You can't upload more than 3 files.");
+        return currentFiles;
+      } else {
+        return totalFiles;
+      }
     };
 
+    setFieldValue("broucher", something());
+      const totalLength = brochurePreview.length + files.length
+    setBrochurePreview((prev) => {
+      if (totalLength > 3) {
+        return prev;
+      } else {
+        const test = files.map((file) => {
+          return {
+            url: URL.createObjectURL(file),
+            fileFormate: file.type,
+          };
+        });
+
+        return prev.concat(test);
+      }
+    });
+  };
+
+  // delete button function for broucher preview
+
+  const handleDelete = (index, setFieldValue, values) => {
+    const updatedPreviews = brochurePreview.filter((_, i) => i !== index);
+    setBrochurePreview(updatedPreviews);
+
+    const toDelete = () => {
+      const dataToDelete = values.broucher.filter((_, i) => i !== index);
+      return dataToDelete;
+    };
+
+    setFieldValue("broucher", toDelete());
+  };
 
   return (
-    <div className='w-full h-fit flex flex-col items-center mt-48 px-4'>
+    <div className="w-full h-fit flex flex-col items-center mt-48 px-4">
+      <h2 className="text-xl md:text-3xl lg:text-4xl font-bold font-public  text-gray-800">
+        Fill Your Details
+      </h2>
 
-        <h2 className='text-xl md:text-3xl lg:text-4xl font-bold font-public  text-gray-800'>
-            Fill Your Details
-        </h2>
-
-        <p className='md:text-lg text-center text-base text-gray-800 font-public font-normal mt-2'>
+      <p className="md:text-lg text-center text-base text-gray-800 font-public font-normal mt-2">
         Provide your information to generate your digital business card.
-        </p>
+      </p>
 
-       <Formik
+      <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
-       >
-        {({setFieldValue, values})=>(
-             <Form  className='w-full px-4 md:w-8/12 flex flex-col gap-y-4 mt-16'>
-             <div className='w-full h-fit flex flex-col lg:flex-row lg:justify-between bg-transparent gap-4'>
-                 <div className='flex flex-col  w-full lg:w-1/2 h-fit rounded-xl   '>
-                     <div className=' w-full h-12 px-4 flex rounded-lg items-center bg-[#254E7E17]'>
-                     <PersonIcon/>
-                     <Field type="text"
-                     name='userName'
-                     placeholder='Full Name'
-                     className=' w-full h-full border-none focus:outline-none bg-transparent pl-4'
-                      />
-                     </div>
-                     
-                     <ErrorMessage name="userName" component="div" className="text-red-600 text-sm" /> 
-                 </div>
-                 
-                 <div className='flex flex-col  w-full lg:w-1/2 h-fit rounded-xl'>
-                     <div className='w-full h-12 px-4 flex rounded-lg items-center bg-[#254E7E17]'>
-                     <GiPoliceOfficerHead/>
-                     <Field type="text"
-                     name='job'
-                     placeholder='Profession / Position'
-                     className='  w-full h-full border-none focus:outline-none bg-transparent pl-4'
-                     />
-                      </div>
-                      <ErrorMessage name="job" component="div" className="text-red-600 text-sm" /> 
-                 </div>
-             </div>
- 
- 
- 
-             <div className='w-full h-fit flex flex-col    '>
-                     <div className='h-12 w-full pl-4 text-2xl rounded-xl flex items-center bg-[#254E7E17]'>
-                     <BiLogoGmail/>
-                     <Field type="email"
-                     name='email'
-                     placeholder='E-mail'
-                     className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
-                     />
-                     </div>
-                     <ErrorMessage name="email" component="div" className="text-red-600 text-sm" /> 
-                 </div>
+      >
+        {({ setFieldValue, values }) => (
+          <Form className="w-full px-4 md:w-8/12 flex flex-col gap-y-4 mt-16">
+            <NameField />
 
+            <div className="w-full flex flex-col items-end justify-end h-fit overflow-hidden">
+              <div className="w-fit h-12 rounded-xl flex ">
+                <label
+                  htmlFor="broucher"
+                  className="cursor-pointer flex items-center bg-[#254E7E17] px-4 text-gray-400 rounded-l-lg"
+                >
+                  Upload your Broucher
+                </label>
+                <input
+                  type="file"
+                  id="broucher"
+                  className="hidden"
+                  multiple
+                  onChange={(e) => handleFileChange(e, setFieldValue, values)}
+                />
 
-                 <div className='w-full flex flex-col  h-fit  '>
-                     <div className='h-12 w-full px-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
-                     <BiSolidContact/>
-                     <Field type="tel"
-                     name='phoneNumber'
-                     placeholder='PhoneNumber'
-                     onInput={(e) => {
-                        e.target.value = e.target.value.replace(/\D/g, "");
-                      }}
-                    className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base pl-4 bg-transparent'
-                    />
-                     </div>
-                     <ErrorMessage name="phoneNumber" component="div" className="text-red-600 text-sm" /> 
-                 </div>
-
-
-                 <div className='w-full flex flex-col  h-fit  '>
-                     <div className='h-12 w-full pl-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
-                     <IoLogoWhatsapp/>
-                     <Field type="tel"
-                     name='whatsAppNumber'
-                     placeholder='WhatsApp Number'
-                     onInput={(e) => {
-                        e.target.value = e.target.value.replace(/\D/g, ""); 
-                      }}
-                     className='  w-full h-full border-none focus:outline-none placeholder:text-base text-base pl-4 bg-transparent'
-                      />
-                     </div>
-                     <ErrorMessage name="whatsAppNumber" component="div" className="text-red-600 text-sm" /> 
-                 </div>
-
-
-                 <div className='w-full flex flex-col  h-fit  overflow-hidden'>
-                     <div className='h-12 w-full pl-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
-                     <BiSolidLocationPlus/>
-                     <Field type="url"
-                     name='locationLink'
-                     placeholder='Location Link'
-                     className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
-                     />
-                     </div>
-                     <ErrorMessage name="locationLink" component="div" className="text-red-600 text-sm" />
-                 </div>
-                 <div className='w-full flex flex-col  h-fit  '>
-                     <div className='h-12 w-full px-4 text-2xl flex rounded-xl items-center bg-[#254E7E17]'>
-                     <MdBusinessCenter/>
-                     
-                     
-                     <Field type="text"
-                     name='businessName'
-                    
-                     placeholder='Business Name'
-                     className=' w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4'
-                    
- 
- 
-                     />
-                     </div>
-                     <ErrorMessage name="businessName" component="div" className="text-red-600 text-sm" />
-                 </div>
-
-
-                 <div className='w-full flex flex-col items-end justify-end h-fit overflow-hidden'>
-                     
-                    <div className='w-fit h-12 rounded-xl flex '>
-                   
-                    <label htmlFor="broucher" className="cursor-pointer flex items-center bg-[#254E7E17] px-4 text-gray-400 rounded-l-lg">
-                         Upload your Broucher
-                     </label>
-                     <input
-                      type="file"
-                      id="broucher"
-                      className="hidden"
-                      multiple
-                      onChange={(e) => handleFileChange(e, setFieldValue)}
-                     />
-                      
-                     <div className='h-full w-fit pr-4 text-2xl rounded-r-xl flex items-center bg-[#254E7E17]'>
-                     <BsPaperclip/>
-                     </div>
-                    </div>
-                    <ErrorMessage name="broucher" component="div" className="text-red-600 text-sm" />
-                     
-                 </div> 
-                 {brochurePreview?.length > 0 &&(
-                    <div className='w-full h-fit flex justify-center mb-4 overflow-x-scroll'>
-                        {brochurePreview.map((preview,index)=>(
-                          <div
-                          key={index}
-                           className="w-fit mt-4 flex flex-col mx-2 ">
-                          <div className=' flex justify-between w-full mb-2 items-center'>
-                          <p className="text-sm text-gray-600 mb-2 ">Preview:</p>
-                          <button
-                            type="button"
-                            onClick={() => handleDelete(index,setFieldValue)} 
-                            className="text-red-500 text-sm"
-                          >
-                           <IoIosCloseCircle style={{ fontSize: "30px"}} />
-                          </button>
-                          </div>
-                          <div className="flex items-end justify-end flex-col gap-3">
-                            {brochurePreview.includes('data:image') ? (
-                              <img
-                              src={preview}
-                              alt={`Brochure Preview ${index + 1}`}
-                                className="w-44 h-44 object-contain border-2 border-gray-300 rounded-md"
-                              />
-                            ) : (
-                              <embed
-                              src={preview}
-                                type="application/pdf"
-                                width="300"
-                                height="200"
-                              />
-                          )}
-                          
-                        </div>
-                      </div>
-                        ))}
+                <div className="h-full w-fit pr-4 text-2xl rounded-r-xl flex items-center bg-[#254E7E17]">
+                  <BsPaperclip />
                 </div>
-                        
-                 )}
-                 <div className='w-full h-fit flex flex-col md:flex-row items-center justify-between gap-3 '>
-                    <div className='w-full md:w-1/2 flex flex-col h-fit'>
-                        <div className='h-12 w-full pl-4 text-2xl rounded-xl flex items-center bg-[#254E7E17] px-4'>
-                             <Field
-                             name="country" as="select" value={values.country} className="w-full text-base h-full border-none focus:outline-none bg-transparent "
-                                >
-                                     <option value="" disabled selected >Select a Country</option>
-                                        {countries.map((country) => (
-                                        <option key={country.id} value={country.id} label={country.name}/>
-                                        
-                                        
-                                    ))}
-                            </Field>
-
-                        </div>
-                        <ErrorMessage name="country" component="div" className="text-red-600 text-sm" />
+              </div>
+              <ErrorMessage
+                name="broucher"
+                component="div"
+                className="text-red-600 text-sm"
+              />
+            </div>
+            {brochurePreview?.length > 0 && (
+              <div className="w-full h-fit flex flex-col items-center md:flex-row gap-x-4  justify-center px-6 mb-6 ">
+                {brochurePreview.map((preview, index) => (
+                  <div key={index} className="w-fit  mt-4  flex flex-col  ">
+                    <div className=" flex justify-between w-full mb-2 items-center">
+                      <p className="text-sm text-gray-600 mb-2 ">Preview:</p>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleDelete(index, setFieldValue, values)
+                        }
+                        className="text-red-500 text-sm"
+                      >
+                        <IoIosCloseCircle style={{ fontSize: "30px" }} />
+                      </button>
                     </div>
-
-
-                    <div className=" w-full md:w-1/2 flex flex-col  justify-center gap-2 mb-4 px-4">
-                        <label className="text-gray-700 font-medium">Gender</label>
-                        <div role="group" aria-labelledby="gender-radio-group" className="flex gap-4 mt-2">
-                        <div>
-                        <Field
-                         type="radio"
-                         id="male"
-                         name="gender"
-                         value="male"
-                         className="mr-2"
-                         />
-                        <label htmlFor="male" className="text-gray-600">Male</label>
-                        </div>
-                        <div>
-                        <Field
-                        type="radio"
-                        id="female"
-                        name="gender"
-                        value="female"
-                        className="mr-2"
-                         />
-                            <label htmlFor="female" className="text-gray-600">Female</label>
-                        </div>
-                        <div>
-                         <Field
-                             type="radio"
-                             id="other"
-                             name="gender"
-                             value="other"
-                            className="mr-2"
-                            />
-                             <label htmlFor="other" className="text-gray-600">Other</label>
-                        </div>
+                    <div className=" w-full h-full  overflow-hidden items-center justify-center flex ">
+                      {preview?.fileFormate.split("/")?.includes("image") ? (
+                        <img
+                          src={preview.url}
+                          alt={`Brochure Preview ${index + 1}`}
+                          className="w-full h-full object-contain border-2 border-gray-300 rounded-md"
+                        />
+                      ) : (
+                        <embed
+                          src={preview.url}
+                          type="application/pdf"
+                          className="w-full   h-full"
+                          style={{ objectFit: "contain" }}
+                        />
+                      )}
                     </div>
-                        <ErrorMessage name="gender" component="div" className="text-red-600 text-sm" />
-                    </div>
-                 </div>
-                 
-                 <div className='w-full h-fit '>
-                     
-                     <div className='w-full  h-40 rounded-xl overflow-hidden '>
-                     <label htmlFor="about" className='sr-only'> about </label>
-                     <Field
-                      as="textarea"
-                     name='about'
-                     placeholder='Short Brief About you'
-                     className=' w-full h-full border-none focus:outline-none p-2 placeholder:text-base text-base bg-[#254E7E17] pl-4'
-                     />
-                     </div>
-                     <ErrorMessage name="about" component="div" className="text-red-600 text-sm" />
-                 </div>
- 
-                 <button className='w-full mt-12 h-14 bg-[#F66F4D] active:scale-95 active:bg-[#FA8C6A] text-white text-2xl rounded-xl mb-32 hover:scale-105 transition-all duration-300 '
-                 type="submit"
-                 
-                 >
-                     Generate
-                 </button>
- 
- 
-         </Form>
- 
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="w-full h-fit flex flex-col md:flex-row items-center justify-between gap-3 ">
+              <div className="w-full md:w-1/2 flex flex-col h-fit">
+                <div className="h-12 w-full pl-4 text-2xl rounded-xl flex items-center bg-[#254E7E17] px-4">
+                  <Field
+                    name="country"
+                    as="select"
+                    value={values.country}
+                    className="w-full text-base h-full border-none focus:outline-none bg-transparent "
+                  >
+                    <option value="" disabled>
+                      Select a Country
+                    </option>
+                    {countries.map((country) => (
+                      <option
+                        key={country.id}
+                        value={country.id}
+                        label={country.name}
+                      />
+                    ))}
+                  </Field>
+                </div>
+                <ErrorMessage
+                  name="country"
+                  component="div"
+                  className="text-red-600 text-sm"
+                />
+              </div>
+
+              <div className=" w-full md:w-1/2 flex flex-col  justify-center gap-2 mb-4 px-4">
+                <label className="text-gray-700 font-medium">Gender</label>
+                <div
+                  role="group"
+                  aria-labelledby="gender-radio-group"
+                  className="flex gap-4 mt-2"
+                >
+                  <div>
+                    <Field
+                      type="radio"
+                      id="male"
+                      name="gender"
+                      value="male"
+                      className="mr-2"
+                    />
+                    <label htmlFor="male" className="text-gray-600">
+                      Male
+                    </label>
+                  </div>
+                  <div>
+                    <Field
+                      type="radio"
+                      id="female"
+                      name="gender"
+                      value="female"
+                      className="mr-2"
+                    />
+                    <label htmlFor="female" className="text-gray-600">
+                      Female
+                    </label>
+                  </div>
+                  <div>
+                    <Field
+                      type="radio"
+                      id="other"
+                      name="gender"
+                      value="other"
+                      className="mr-2"
+                    />
+                    <label htmlFor="other" className="text-gray-600">
+                      Other
+                    </label>
+                  </div>
+                </div>
+                <ErrorMessage
+                  name="gender"
+                  component="div"
+                  className="text-red-600 text-sm"
+                />
+              </div>
+            </div>
+
+            <div className="w-full h-fit ">
+              <div className="w-full  h-40 rounded-xl overflow-hidden ">
+                <label htmlFor="about" className="sr-only">
+                  {" "}
+                  about{" "}
+                </label>
+                <Field
+                  as="textarea"
+                  name="about"
+                  placeholder="Short Brief About you"
+                  className=" w-full h-full border-none focus:outline-none p-2 placeholder:text-base text-base bg-[#254E7E17] pl-4"
+                />
+              </div>
+              <ErrorMessage
+                name="about"
+                component="div"
+                className="text-red-600 text-sm"
+              />
+            </div>
+
+            <button
+              className="w-full mt-12 h-14 bg-[#F66F4D] active:scale-95 active:bg-[#FA8C6A] text-white text-2xl rounded-xl mb-32 hover:scale-105 transition-all duration-300 "
+              type="submit"
+            >
+              Generate
+            </button>
+          </Form>
         )}
-       </Formik>
-      
+      </Formik>
     </div>
-  )
+  );
 }
 
-export default DetailsForm
+export default DetailsForm;
+ 
