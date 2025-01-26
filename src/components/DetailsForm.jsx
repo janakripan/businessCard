@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-
-import { BsPaperclip } from "react-icons/bs";
+import React, {  useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { IoIosCloseCircle } from "react-icons/io";
 import { countries } from "../constants/countries";
 import { validationSchema } from "../validations/DetailsFormSchema";
 import NameField from "./DetailFormParts/NameField";
+import DragAndDrop from "./DetailFormParts/DragAndDrop";
 
 function DetailsForm() {
   //state variables
@@ -35,11 +34,7 @@ function DetailsForm() {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (brochurePreview !== null) {
-      console.log(brochurePreview);
-    }
-  }, [brochurePreview]);
+  
 
   //handle submit function
 
@@ -55,42 +50,10 @@ function DetailsForm() {
     resetForm();
   };
 
-  //handle change for broucher files
+  
 
-  const handleFileChange = (e, setFieldValue, values) => {
-    const files = Array.from(e.target.files);
-
-    const something = () => {
-      const currentFiles = values.broucher || [];
-      const totalFiles = [...currentFiles, ...files];
-
-      if (totalFiles.length > 3) {
-        alert("You can't upload more than 3 files.");
-        return currentFiles;
-      } else {
-        return totalFiles;
-      }
-    };
-
-    setFieldValue("broucher", something());
-      const totalLength = brochurePreview.length + files.length
-    setBrochurePreview((prev) => {
-      if (totalLength > 3) {
-        return prev;
-      } else {
-        const test = files.map((file) => {
-          return {
-            url: URL.createObjectURL(file),
-            fileFormate: file.type,
-          };
-        });
-
-        return prev.concat(test);
-      }
-    });
-  };
-
-  // delete button function for broucher preview
+  // delete button function for broucher preview.
+  
 
   const handleDelete = (index, setFieldValue, values) => {
     const updatedPreviews = brochurePreview.filter((_, i) => i !== index);
@@ -124,31 +87,18 @@ function DetailsForm() {
             <NameField />
 
             <div className="w-full flex flex-col items-end justify-end h-fit overflow-hidden">
-              <div className="w-fit h-12 rounded-xl flex ">
-                <label
-                  htmlFor="broucher"
-                  className="cursor-pointer flex items-center bg-[#254E7E17] px-4 text-gray-400 rounded-l-lg"
-                >
-                  Upload your Broucher
-                </label>
-                <input
-                  type="file"
-                  id="broucher"
-                  className="hidden"
-                  multiple
-                  onChange={(e) => handleFileChange(e, setFieldValue, values)}
-                />
-
-                <div className="h-full w-fit pr-4 text-2xl rounded-r-xl flex items-center bg-[#254E7E17]">
-                  <BsPaperclip />
-                </div>
-              </div>
+              <DragAndDrop 
+              setFieldValue={setFieldValue}
+              values={values} 
+              setBrochurePreview={setBrochurePreview} 
+              brochurePreview={brochurePreview}
+              />
               <ErrorMessage
                 name="broucher"
                 component="div"
                 className="text-red-600 text-sm"
               />
-            </div>
+             </div>
             {brochurePreview?.length > 0 && (
               <div className="w-full h-fit flex flex-col items-center md:flex-row gap-x-4  justify-center px-6 mb-6 ">
                 {brochurePreview.map((preview, index) => (
@@ -165,7 +115,7 @@ function DetailsForm() {
                         <IoIosCloseCircle style={{ fontSize: "30px" }} />
                       </button>
                     </div>
-                    <div className=" w-full h-full  overflow-hidden items-center justify-center flex ">
+                    <div className=" w-full h-full md:w-44 md:h-44  overflow-hidden items-center justify-center flex ">
                       {preview?.fileFormate.split("/")?.includes("image") ? (
                         <img
                           src={preview.url}
