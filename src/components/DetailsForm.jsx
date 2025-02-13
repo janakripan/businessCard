@@ -21,7 +21,7 @@ function DetailsForm() {
     WhatsappNumber: "",
     LocationLink: "",
     BusinessName: "",
-    Broucher:  "VGhpcyBpcyBhDFGHhbXBsZSBicm9jaHVyZSBmaWxlLg==",
+    Broucher: "VGhpcyBpcyBhDFGHhbXBsZSBicm9jaHVyZSBmaWxlLg==",
     Description: "",
     Country: "",
     // gender: "",
@@ -37,24 +37,45 @@ function DetailsForm() {
 
   //handle submit function
 
-  const handleSubmit = (values, { resetForm, setFieldValue }) => {
+  const handleSubmit = (
+    values,
+    { resetForm, setFieldValue, setSubmitting, isSubmitting }
+  ) => {
     console.log("Sending Data:", JSON.stringify(values, null, 2));
+
     
-    axios
-      .post(
-        "https://digiprofile-djh7gkgphhbgbmed.eastus-01.azurewebsites.net/api/postbusinesscard",
-        values
-      )
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
-    alert("Form submitted successfully!");
+
+    setSubmitting(true);
    
 
-    // setFieldValue("Broucher", []);
+    setTimeout(() => {
+      axios
+        .post(
+          "https://digiprofile-djh7gkgphhbgbmed.eastus-01.azurewebsites.net/api/postbusinesscard",
+          values
+        )
+        .then((response) => {
+          console.log(response);
+          alert("Form submitted successfully!");
+          resetForm();
+          // setFieldValue("Broucher", []);
 
-    // setBrochurePreview([]);
-
-    resetForm();
+          // setBrochurePreview([]);
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response) {
+           
+            alert("Error: " +JSON.stringify(err.response.data.message || err.message));
+          } else {
+            alert("An unknown error occurred: " + err.message);
+          }
+        })
+        .finally(() => {
+          setSubmitting(false);
+        });
+    }, 1000);
+   
   };
 
   // delete button function for broucher preview.
@@ -63,12 +84,12 @@ function DetailsForm() {
   //   const updatedPreviews = brochurePreview.filter((_, i) => i !== index);
   //   setBrochurePreview(updatedPreviews);
 
-    // const toDelete = () => {
-    //   const dataToDelete = values.Broucher.filter((_, i) => i !== index);
-    //   return dataToDelete;
-    // };
+  // const toDelete = () => {
+  //   const dataToDelete = values.Broucher.filter((_, i) => i !== index);
+  //   return dataToDelete;
+  // };
 
-    // setFieldValue("Broucher", toDelete());
+  // setFieldValue("Broucher", toDelete());
   // };
 
   return (
@@ -86,11 +107,14 @@ function DetailsForm() {
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        {({ setFieldValue, values }) => (
-          <Form className="w-full px-4 md:w-8/12 flex flex-col gap-y-4 mt-16">
-            <NameField />
+        {({ setFieldValue, values, setSubmitting, isSubmitting }) => {
+         
 
-            {/* <div className="w-full flex flex-col items-end justify-end h-fit overflow-hidden">
+          return (
+            <Form className="w-full px-4 md:w-8/12 flex flex-col gap-y-4 mt-16">
+              <NameField />
+
+              {/* <div className="w-full flex flex-col items-end justify-end h-fit overflow-hidden">
               <DragAndDrop
                 setFieldValue={setFieldValue}
                 values={values}
@@ -103,7 +127,7 @@ function DetailsForm() {
                 className="text-red-600 text-sm"
               />
             </div> */}
-            {/* {brochurePreview?.length > 0 && (
+              {/* {brochurePreview?.length > 0 && (
               <div className="w-full h-fit flex flex-col items-center md:flex-row gap-x-4  justify-center px-6 mb-6 ">
                 {brochurePreview.map((preview, index) => (
                   <div key={index} className="w-fit  mt-4  flex flex-col  ">
@@ -139,35 +163,35 @@ function DetailsForm() {
                 ))}
               </div>
             )} */}
-            <div className="w-full h-fit flex flex-col md:flex-row items-center justify-between gap-3 ">
-              <div className="w-full md:w-1/2 flex flex-col h-fit">
-                <div className="h-12 w-full pl-4 text-2xl rounded-xl flex items-center bg-[#254E7E17] px-4">
-                  <Field
+              <div className="w-full h-fit flex flex-col md:flex-row items-center justify-between gap-3 ">
+                <div className="w-full md:w-1/2 flex flex-col h-fit">
+                  <div className="h-12 w-full pl-4 text-2xl rounded-xl flex items-center bg-[#254E7E17] px-4">
+                    <Field
+                      name="Country"
+                      as="select"
+                      value={values.Country}
+                      className="w-full text-base h-full border-none focus:outline-none bg-transparent "
+                    >
+                      <option value="" disabled>
+                        Select a Country
+                      </option>
+                      {countries.map((country) => (
+                        <option
+                          key={country.id}
+                          value={country.id}
+                          label={country.name}
+                        />
+                      ))}
+                    </Field>
+                  </div>
+                  <ErrorMessage
                     name="Country"
-                    as="select"
-                    value={values.Country}
-                    className="w-full text-base h-full border-none focus:outline-none bg-transparent "
-                  >
-                    <option value="" disabled>
-                      Select a Country
-                    </option>
-                    {countries.map((country) => (
-                      <option
-                        key={country.id}
-                        value={country.id}
-                        label={country.name}
-                      />
-                    ))}
-                  </Field>
+                    component="div"
+                    className="text-red-600 text-sm"
+                  />
                 </div>
-                <ErrorMessage
-                  name="Country"
-                  component="div"
-                  className="text-red-600 text-sm"
-                />
-              </div>
 
-              {/* <div className=" w-full md:w-1/2 flex flex-col  justify-center gap-2 mb-4 px-4">
+                {/* <div className=" w-full md:w-1/2 flex flex-col  justify-center gap-2 mb-4 px-4">
                 <label className="text-gray-700 font-medium">Gender</label>
                 <div
                   role="group"
@@ -217,36 +241,38 @@ function DetailsForm() {
                   className="text-red-600 text-sm"
                 />
               </div> */}
-            </div>
+              </div>
 
-            <div className="w-full h-fit ">
-              <div className="w-full  h-40 rounded-xl overflow-hidden ">
-                <label htmlFor="Description" className="sr-only">
-                  {" "}
-                  Description{" "}
-                </label>
-                <Field
-                  as="textarea"
+              <div className="w-full h-fit ">
+                <div className="w-full  h-40 rounded-xl overflow-hidden ">
+                  <label htmlFor="Description" className="sr-only">
+                    {" "}
+                    Description{" "}
+                  </label>
+                  <Field
+                    as="textarea"
+                    name="Description"
+                    placeholder="Short Brief About you"
+                    className=" w-full h-full border-none focus:outline-none p-2 placeholder:text-base text-base bg-[#254E7E17] pl-4"
+                  />
+                </div>
+                <ErrorMessage
                   name="Description"
-                  placeholder="Short Brief About you"
-                  className=" w-full h-full border-none focus:outline-none p-2 placeholder:text-base text-base bg-[#254E7E17] pl-4"
+                  component="div"
+                  className="text-red-600 text-sm"
                 />
               </div>
-              <ErrorMessage
-                name="Description"
-                component="div"
-                className="text-red-600 text-sm"
-              />
-            </div>
 
-            <button
-              className="w-full mt-12 h-14 bg-[#F66F4D] active:scale-95 active:bg-[#FA8C6A] text-white text-2xl rounded-xl mb-32 hover:scale-105 transition-all duration-300 "
-              type="submit"
-            >
-              Generate
-            </button>
-          </Form>
-        )}
+              <button
+                className="w-full mt-12 h-14 bg-[#F66F4D] disabled:bg-gray-400  active:scale-95 active:bg-[#FA8C6A] text-white text-2xl rounded-xl mb-32 hover:scale-105 transition-all duration-300 "
+                type="submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Generating..." : "Generate"}
+              </button>
+            </Form>
+          );
+        }}
       </Formik>
     </div>
   );
