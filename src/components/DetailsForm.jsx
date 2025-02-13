@@ -39,7 +39,7 @@ function DetailsForm() {
 
   const handleSubmit = (
     values,
-    { resetForm, setFieldValue, setSubmitting, isSubmitting }
+    { resetForm, setFieldValue, setSubmitting, isSubmitting,setFieldError }
   ) => {
     console.log("Sending Data:", JSON.stringify(values, null, 2));
 
@@ -65,8 +65,9 @@ function DetailsForm() {
         .catch((err) => {
           console.log(err);
           if (err.response) {
+          
            
-            alert("Error: " +JSON.stringify(err.response.data.message || err.message));
+           setFieldError( "Email",JSON.stringify(err.response.data.message))
           } else {
             alert("An unknown error occurred: " + err.message);
           }
@@ -107,7 +108,7 @@ function DetailsForm() {
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        {({ setFieldValue, values, setSubmitting, isSubmitting }) => {
+        {({ setFieldValue, values, setSubmitting, isSubmitting,setFieldError }) => {
          
 
           return (
