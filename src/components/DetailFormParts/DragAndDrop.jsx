@@ -13,7 +13,7 @@ function DragAndDrop({
         const files = acceptedFiles
 
         const something = () => {
-                const currentFiles = values.broucher || [];
+                const currentFiles = values.Broucher || [];
                 const totalFiles = [...currentFiles, ...files];
           
                 if (totalFiles.length > 3) {
@@ -23,7 +23,7 @@ function DragAndDrop({
                   return totalFiles;
                 }
               };
-        setFieldValue("broucher", something());
+        setFieldValue("Broucher", something());
 
        
         const totalLength = brochurePreview.length + files.length
@@ -56,7 +56,7 @@ function DragAndDrop({
   return (
     
       <div {...getRootProps()}
-      className='w-4/12 bg-[#254E7E17] h-full min-h-12 flex flex-row items-center justify-center px-2 rounded-lg'>
+      className='w-8/12 md:w-6/12 lg:w-4/12 bg-[#254E7E17] h-full min-h-12 flex flex-row items-center justify-center px-2 rounded-lg'>
         <input {...getInputProps()} />
         {isDragActive ? (
               <p className='whitespace-nowrap text-base text-gray-400'>Drop the files here...</p>

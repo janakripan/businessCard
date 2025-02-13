@@ -1,71 +1,75 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { IoIosCloseCircle } from "react-icons/io";
 import { countries } from "../constants/countries";
 import { validationSchema } from "../validations/DetailsFormSchema";
 import NameField from "./DetailFormParts/NameField";
 import DragAndDrop from "./DetailFormParts/DragAndDrop";
+import axios from "axios";
 
 function DetailsForm() {
   //state variables
-  const [brochurePreview, setBrochurePreview] = useState([]);
+  // const [brochurePreview, setBrochurePreview] = useState([]);
 
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
 
   const initialValues = {
-    userName: "",
-    job: "",
-    email: "",
-    phoneNumber: "",
-    whatsAppNumber: "",
-    locationLink: "",
-    businessName: "",
-    broucher: [],
-    about: "",
-    country: "",
-    gender: "",
+    FullName: "",
+    Profession: "",
+    Email: "",
+    PhoneNumber: "",
+    WhatsappNumber: "",
+    LocationLink: "",
+    BusinessName: "",
+    Broucher:  "VGhpcyBpcyBhDFGHhbXBsZSBicm9jaHVyZSBmaWxlLg==",
+    Description: "",
+    Country: "",
+    // gender: "",
   };
 
   //console outputs
 
-  useEffect(() => {
-    if (data !== null) {
-      console.log("Data updated:", data);
-    }
-  }, [data]);
-
-  
+  // useEffect(() => {
+  //   if (data !== null) {
+  //     console.log("Data updated:", data);
+  //   }
+  // }, [data]);
 
   //handle submit function
 
   const handleSubmit = (values, { resetForm, setFieldValue }) => {
-    setData(values);
-
+    console.log("Sending Data:", JSON.stringify(values, null, 2));
+    
+    axios
+      .post(
+        "https://digiprofile-djh7gkgphhbgbmed.eastus-01.azurewebsites.net/api/postbusinesscard",
+        values
+      )
+      .then((response) => console.log(response))
+      .catch((err) => console.log(err));
     alert("Form submitted successfully!");
+   
 
-    setFieldValue("broucher", []);
+    // setFieldValue("Broucher", []);
 
-    setBrochurePreview([]);
+    // setBrochurePreview([]);
 
     resetForm();
   };
 
-  
-
   // delete button function for broucher preview.
-  
 
-  const handleDelete = (index, setFieldValue, values) => {
-    const updatedPreviews = brochurePreview.filter((_, i) => i !== index);
-    setBrochurePreview(updatedPreviews);
+  // const handleDelete = (index, setFieldValue, values) => {
+  //   const updatedPreviews = brochurePreview.filter((_, i) => i !== index);
+  //   setBrochurePreview(updatedPreviews);
 
-    const toDelete = () => {
-      const dataToDelete = values.broucher.filter((_, i) => i !== index);
-      return dataToDelete;
-    };
+    // const toDelete = () => {
+    //   const dataToDelete = values.Broucher.filter((_, i) => i !== index);
+    //   return dataToDelete;
+    // };
 
-    setFieldValue("broucher", toDelete());
-  };
+    // setFieldValue("Broucher", toDelete());
+  // };
 
   return (
     <div className="w-full h-fit flex flex-col items-center mt-48 px-4">
@@ -86,20 +90,20 @@ function DetailsForm() {
           <Form className="w-full px-4 md:w-8/12 flex flex-col gap-y-4 mt-16">
             <NameField />
 
-            <div className="w-full flex flex-col items-end justify-end h-fit overflow-hidden">
-              <DragAndDrop 
-              setFieldValue={setFieldValue}
-              values={values} 
-              setBrochurePreview={setBrochurePreview} 
-              brochurePreview={brochurePreview}
+            {/* <div className="w-full flex flex-col items-end justify-end h-fit overflow-hidden">
+              <DragAndDrop
+                setFieldValue={setFieldValue}
+                values={values}
+                setBrochurePreview={setBrochurePreview}
+                brochurePreview={brochurePreview}
               />
               <ErrorMessage
-                name="broucher"
+                name="Broucher"
                 component="div"
                 className="text-red-600 text-sm"
               />
-             </div>
-            {brochurePreview?.length > 0 && (
+            </div> */}
+            {/* {brochurePreview?.length > 0 && (
               <div className="w-full h-fit flex flex-col items-center md:flex-row gap-x-4  justify-center px-6 mb-6 ">
                 {brochurePreview.map((preview, index) => (
                   <div key={index} className="w-fit  mt-4  flex flex-col  ">
@@ -134,14 +138,14 @@ function DetailsForm() {
                   </div>
                 ))}
               </div>
-            )}
+            )} */}
             <div className="w-full h-fit flex flex-col md:flex-row items-center justify-between gap-3 ">
               <div className="w-full md:w-1/2 flex flex-col h-fit">
                 <div className="h-12 w-full pl-4 text-2xl rounded-xl flex items-center bg-[#254E7E17] px-4">
                   <Field
-                    name="country"
+                    name="Country"
                     as="select"
-                    value={values.country}
+                    value={values.Country}
                     className="w-full text-base h-full border-none focus:outline-none bg-transparent "
                   >
                     <option value="" disabled>
@@ -157,13 +161,13 @@ function DetailsForm() {
                   </Field>
                 </div>
                 <ErrorMessage
-                  name="country"
+                  name="Country"
                   component="div"
                   className="text-red-600 text-sm"
                 />
               </div>
 
-              <div className=" w-full md:w-1/2 flex flex-col  justify-center gap-2 mb-4 px-4">
+              {/* <div className=" w-full md:w-1/2 flex flex-col  justify-center gap-2 mb-4 px-4">
                 <label className="text-gray-700 font-medium">Gender</label>
                 <div
                   role="group"
@@ -212,24 +216,24 @@ function DetailsForm() {
                   component="div"
                   className="text-red-600 text-sm"
                 />
-              </div>
+              </div> */}
             </div>
 
             <div className="w-full h-fit ">
               <div className="w-full  h-40 rounded-xl overflow-hidden ">
-                <label htmlFor="about" className="sr-only">
+                <label htmlFor="Description" className="sr-only">
                   {" "}
-                  about{" "}
+                  Description{" "}
                 </label>
                 <Field
                   as="textarea"
-                  name="about"
+                  name="Description"
                   placeholder="Short Brief About you"
                   className=" w-full h-full border-none focus:outline-none p-2 placeholder:text-base text-base bg-[#254E7E17] pl-4"
                 />
               </div>
               <ErrorMessage
-                name="about"
+                name="Description"
                 component="div"
                 className="text-red-600 text-sm"
               />
@@ -249,4 +253,3 @@ function DetailsForm() {
 }
 
 export default DetailsForm;
- 

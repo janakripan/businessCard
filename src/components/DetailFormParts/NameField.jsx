@@ -18,14 +18,14 @@ function NameField() {
                       <PersonIcon />
                       <Field
                         type="text"
-                        name="userName"
+                        name="FullName"
                         placeholder="Full Name"
                         className=" w-full h-full border-none focus:outline-none bg-transparent pl-4"
                       />
                     </div>
     
                     <ErrorMessage
-                      name="userName"
+                      name="FullName"
                       component="div"
                       className="text-red-600 text-sm"
                     />
@@ -36,13 +36,13 @@ function NameField() {
                       <GiPoliceOfficerHead />
                       <Field
                         type="text"
-                        name="job"
+                        name="Profession"
                         placeholder="Profession / Position"
                         className="  w-full h-full border-none focus:outline-none bg-transparent pl-4"
                       />
                     </div>
                     <ErrorMessage
-                      name="job"
+                      name="Profession"
                       component="div"
                       className="text-red-600 text-sm"
                     />
@@ -53,13 +53,13 @@ function NameField() {
                                 <BiLogoGmail />
                                 <Field
                                   type="email"
-                                  name="email"
+                                  name="Email"
                                   placeholder="E-mail"
                                   className=" w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4"
                                 />
                               </div>
                               <ErrorMessage
-                                name="email"
+                                name="Email"
                                 component="div"
                                 className="text-red-600 text-sm"
                               />
@@ -70,7 +70,7 @@ function NameField() {
                                 <BiSolidContact />
                                 <Field
                                   type="tel"
-                                  name="phoneNumber"
+                                  name="PhoneNumber"
                                   placeholder="PhoneNumber"
                                   onInput={(e) => {
                                     e.target.value = e.target.value.replace(/\D/g, "");
@@ -79,7 +79,7 @@ function NameField() {
                                 />
                               </div>
                               <ErrorMessage
-                                name="phoneNumber"
+                                name="PhoneNumber"
                                 component="div"
                                 className="text-red-600 text-sm"
                               />
@@ -90,8 +90,8 @@ function NameField() {
                                 <IoLogoWhatsapp />
                                 <Field
                                   type="tel"
-                                  name="whatsAppNumber"
-                                  placeholder="WhatsApp Number"
+                                  name="WhatsappNumber"
+                                  placeholder="Whatsapp Number"
                                   onInput={(e) => {
                                     e.target.value = e.target.value.replace(/\D/g, "");
                                   }}
@@ -99,7 +99,7 @@ function NameField() {
                                 />
                               </div>
                               <ErrorMessage
-                                name="whatsAppNumber"
+                                name="WhatsappNumber"
                                 component="div"
                                 className="text-red-600 text-sm"
                               />
@@ -110,13 +110,13 @@ function NameField() {
                                 <BiSolidLocationPlus />
                                 <Field
                                   type="url"
-                                  name="locationLink"
+                                  name="LocationLink"
                                   placeholder="Location Link"
                                   className=" w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4"
                                 />
                               </div>
                               <ErrorMessage
-                                name="locationLink"
+                                name="LocationLink"
                                 component="div"
                                 className="text-red-600 text-sm"
                               />
@@ -127,13 +127,13 @@ function NameField() {
                 
                                 <Field
                                   type="text"
-                                  name="businessName"
+                                  name="BusinessName"
                                   placeholder="Business Name"
                                   className=" w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4"
                                 />
                               </div>
                               <ErrorMessage
-                                name="businessName"
+                                name="BusinessName"
                                 component="div"
                                 className="text-red-600 text-sm"
                               />
