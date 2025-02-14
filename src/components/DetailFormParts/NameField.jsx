@@ -55,7 +55,7 @@ function NameField() {
                                   type="email"
                                   name="Email"
                                   placeholder="E-mail"
-                                  className=" w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4"
+                                  className=" w-full h-full border-none focus:outline-none placeholder:text-base text-base bg-transparent pl-4 rounded-r-xl"
                                 />
                               </div>
                               <ErrorMessage

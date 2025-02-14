@@ -33,6 +33,14 @@ function DetailsForm() {
   useEffect(() => {
     if (apiError) {
       document.body.style.overflow = "hidden";
+      const timer = setTimeout(() => {
+        setApiError("");
+      }, 3000);
+
+      return () => {
+        clearTimeout(timer); 
+        document.body.style.overflow = "auto";
+      };
     } else {
       document.body.style.overflow = "auto";
     }

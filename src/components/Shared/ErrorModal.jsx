@@ -13,7 +13,7 @@ function ErrorModal({apiError, setApiError}) {
       ease: "easeInOut",
       delay:.1
     }}
-    className='w-full h-screen bg-black/50 fixed inset-0 flex items-center justify-center'>
+    className='w-full h-screen bg-transparent fixed inset-0 flex  justify-center pt-10'>
         <motion.div
         initial={{opacity:0 , scale:0}}
         animate={{opacity:1, scale:1}}
