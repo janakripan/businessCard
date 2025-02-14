@@ -6,12 +6,15 @@ import { validationSchema } from "../validations/DetailsFormSchema";
 import NameField from "./DetailFormParts/NameField";
 import DragAndDrop from "./DetailFormParts/DragAndDrop";
 import axios from "axios";
+import ErrorModal from "./Shared/ErrorModal";
 
 function DetailsForm() {
   //state variables
   // const [brochurePreview, setBrochurePreview] = useState([]);
 
   // const [data, setData] = useState(null);
+
+  const [apiError, setApiError] = useState();
 
   const initialValues = {
     FullName: "",
@@ -27,6 +30,19 @@ function DetailsForm() {
     // gender: "",
   };
 
+  useEffect(() => {
+    if (apiError) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    
+    
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [apiError]);
+
   //console outputs
 
   // useEffect(() => {
@@ -39,16 +55,13 @@ function DetailsForm() {
 
   const handleSubmit = (
     values,
-    { resetForm, setFieldValue, setSubmitting, isSubmitting,setFieldError }
+    { resetForm, setFieldValue, setSubmitting, isSubmitting, setFieldError }
   ) => {
     console.log("Sending Data:", JSON.stringify(values, null, 2));
 
-    
-
     setSubmitting(true);
-   
 
-    setTimeout(() => {
+   
       axios
         .post(
           "https://digiprofile-djh7gkgphhbgbmed.eastus-01.azurewebsites.net/api/postbusinesscard",
@@ -65,18 +78,15 @@ function DetailsForm() {
         .catch((err) => {
           console.log(err);
           if (err.response) {
-          
-           
-           setFieldError( "Email",JSON.stringify(err.response.data.message))
+            setApiError(JSON.stringify(err.response.data.message) || "An unknown error occured");
           } else {
-            alert("An unknown error occurred: " + err.message);
+            setApiError("An unknown error occurred: " + err.message);
           }
         })
         .finally(() => {
           setSubmitting(false);
         });
-    }, 1000);
-   
+    
   };
 
   // delete button function for broucher preview.
@@ -94,7 +104,13 @@ function DetailsForm() {
   // };
 
   return (
-    <div className="w-full h-fit flex flex-col items-center mt-48 px-4">
+    <div className="w-full h-fit flex flex-col items-center mt-48 px-4 relative ">
+      {apiError&&(
+        <ErrorModal
+        apiError={apiError}
+        setApiError={setApiError}
+        />
+      )}
       <h2 className="text-xl md:text-3xl lg:text-4xl font-bold font-public  text-gray-800">
         Fill Your Details
       </h2>
@@ -108,9 +124,13 @@ function DetailsForm() {
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        {({ setFieldValue, values, setSubmitting, isSubmitting,setFieldError }) => {
-         
-
+        {({
+          setFieldValue,
+          values,
+          setSubmitting,
+          isSubmitting,
+          setFieldError,
+        }) => {
           return (
             <Form className="w-full px-4 md:w-8/12 flex flex-col gap-y-4 mt-16">
               <NameField />
