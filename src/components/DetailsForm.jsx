@@ -7,6 +7,8 @@ import NameField from "./DetailFormParts/NameField";
 import DragAndDrop from "./DetailFormParts/DragAndDrop";
 import axios from "axios";
 import ErrorModal from "./Shared/ErrorModal";
+import { AnimatePresence } from "motion/react";
+import SuccessModal from "./Shared/SuccessModal";
 
 function DetailsForm() {
   //state variables
@@ -14,7 +16,8 @@ function DetailsForm() {
 
   // const [data, setData] = useState(null);
 
-  const [apiError, setApiError] = useState();
+  const [apiError, setApiError] = useState("");
+  const [successMsg , setSuccessMsg] = useState("")
 
   const initialValues = {
     FullName: "",
@@ -38,18 +41,32 @@ function DetailsForm() {
       }, 3000);
 
       return () => {
-        clearTimeout(timer); 
+        clearTimeout(timer);
         document.body.style.overflow = "auto";
       };
     } else {
       document.body.style.overflow = "auto";
     }
-    
-    
+
     return () => {
       document.body.style.overflow = "auto";
     };
   }, [apiError]);
+  useEffect(() => {
+    if (successMsg) {
+      
+      const timer = setTimeout(() => {
+        setSuccessMsg("");
+      }, 3000);
+
+      return () => {
+        clearTimeout(timer);
+        
+      };
+    } 
+
+  }, [successMsg]);
+
 
   //console outputs
 
@@ -69,32 +86,33 @@ function DetailsForm() {
 
     setSubmitting(true);
 
-   
-      axios
-        .post(
-          "https://digiprofile-djh7gkgphhbgbmed.eastus-01.azurewebsites.net/api/postbusinesscard",
-          values
-        )
-        .then((response) => {
-          console.log(response);
-          alert("Form submitted successfully!");
-          resetForm();
-          // setFieldValue("Broucher", []);
+    axios
+      .post(
+        "https://digiprofile-djh7gkgphhbgbmed.eastus-01.azurewebsites.net/api/postbusinesscard",
+        values
+      )
+      .then((response) => {
+        console.log(response);
+        setSuccessMsg("Your details have been successfully submitted")
+        resetForm();
+        // setFieldValue("Broucher", []);
 
-          // setBrochurePreview([]);
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err.response) {
-            setApiError(JSON.stringify(err.response.data.message) || "An unknown error occured");
-          } else {
-            setApiError("An unknown error occurred: " + err.message);
-          }
-        })
-        .finally(() => {
-          setSubmitting(false);
-        });
-    
+        // setBrochurePreview([]);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response) {
+          setApiError(
+            JSON.stringify(err.response.data.message) ||
+              "An unknown error occured"
+          );
+        } else {
+          setApiError("An unknown error occurred: " + err.message);
+        }
+      })
+      .finally(() => {
+        setSubmitting(false);
+      });
   };
 
   // delete button function for broucher preview.
@@ -113,12 +131,15 @@ function DetailsForm() {
 
   return (
     <div className="w-full h-fit flex flex-col items-center mt-48 px-4 relative ">
-      {apiError&&(
-        <ErrorModal
-        apiError={apiError}
-        setApiError={setApiError}
-        />
-      )}
+      <AnimatePresence>
+        {apiError && (
+          <ErrorModal apiError={apiError} setApiError={setApiError} />
+          
+        )}
+        {successMsg&&(
+          <SuccessModal successMsg={successMsg} />
+        )}
+      </AnimatePresence>
       <h2 className="text-xl md:text-3xl lg:text-4xl font-bold font-public  text-gray-800">
         Fill Your Details
       </h2>

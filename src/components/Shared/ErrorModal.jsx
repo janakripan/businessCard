@@ -1,9 +1,9 @@
 import React from 'react'
-import { AnimatePresence, motion } from "motion/react"
+import * as motion from 'motion/react-client'
 
 function ErrorModal({apiError, setApiError}) {
   return (
-    <AnimatePresence>
+   
     <motion.div 
     initial={{opacity:0}}
     animate={{opacity:1}}
@@ -11,14 +11,18 @@ function ErrorModal({apiError, setApiError}) {
     transition={{
       duration:.1,
       ease: "easeInOut",
-      delay:.1
+      delay:.3,
+      
     }}
     className='w-full h-screen bg-transparent fixed inset-0 flex  justify-center pt-10'>
         <motion.div
         initial={{opacity:0 , scale:0}}
         animate={{opacity:1, scale:1}}
-        exit={{opacity:0, scale:0}}
-        transition={{duration:.2 , delay:.1, ease:"easeInOut"}}
+        exit={{opacity:0, scale:0,y:20}}
+        transition={{
+            duration:.5 ,
+            ease:"easeInOut",
+          }}
 
          className='w-fit py-8 px-6 h-fit bg-white shadow-lg flex flex-col items-center gap-4'>
             <p className=' font-inter text-red-500 font-medium shadow-2xl '>
@@ -33,7 +37,7 @@ function ErrorModal({apiError, setApiError}) {
         </motion.div>
       
     </motion.div>
-    </AnimatePresence>
+   
   )
 }
 
