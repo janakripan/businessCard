@@ -9,23 +9,21 @@ function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(()=>{
-    const handleMouseMove = (e) => {
-        if(e.clientX < 50){
-            setIsSidebarOpen(true)
-        } else if (e.clientX > 300) {
-            setIsSidebarOpen(false);
-         }
-    }
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-},[])
+//   useEffect(()=>{
+//     const handleMouseMove = (e) => {
+//         if(e.clientX < 50){
+//             setIsSidebarOpen(true)
+//         } else if (e.clientX > 300) {
+//             setIsSidebarOpen(false);
+//          }
+//     }
+//     window.addEventListener("mousemove", handleMouseMove);
+//     return () => window.removeEventListener("mousemove", handleMouseMove);
+// },[])
 
   return (
     <div
-      className={` w-fit h-screen absolute left-0 pt-24 transition-transform duration-300 flex flex-row items-center z-20 ${
-        isSidebarOpen ? "lg:translate-x-0" : "lg:-translate-x-full"
-      } ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+      className={` w-fit h-screen absolute left-0 pt-24 transition-transform duration-300 flex flex-row items-center z-20 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
     >
       <div
         className={`w-[350px] lg:w-[300px]  h-full shadow-xl backdrop-blur-xl pt-6 transition-transform duration-300`}
@@ -37,6 +35,7 @@ function Sidebar() {
           {dashboardLinks.map((items) => (
             <li
               key={items.id}
+              onClick={()=>setIsOpen(false)}
               className="w-full h-14  flex items-center "
             >
               <NavLink 

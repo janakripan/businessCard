@@ -1,5 +1,8 @@
+import { title } from "motion/react-client";
 import { CiHome } from "react-icons/ci";
 import { TiThListOutline } from "react-icons/ti";
+import { IoPersonOutline } from "react-icons/io5";
+
 
 export const dashboardLinks=[
     {
@@ -12,6 +15,12 @@ export const dashboardLinks=[
         id:2,
         title:"All Data",
         icon: TiThListOutline,
-        path: "/dashboard"
+        path: "alldata"
+    },
+    {
+        id:3,
+        title:"person",
+        icon: IoPersonOutline,
+        path:"singledata"
     }
 ]

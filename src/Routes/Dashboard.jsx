@@ -3,6 +3,7 @@ import { ApiContext } from "../contexts/ApiContext";
 import ContentCard from "../components/dashboardParts/ContentCard";
 import LoadingAnimation from "../components/Shared/LoadingAnimation";
 
+
 function Dashboard() {
   const { data, loading } = useContext(ApiContext);
 
@@ -18,6 +19,7 @@ function Dashboard() {
           ))}
         </ul>
       </div>
+     
     </div>
   );
 }

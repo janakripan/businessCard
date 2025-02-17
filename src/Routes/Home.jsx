@@ -23,7 +23,7 @@ function Home() {
         </section>
         <div className='w-full pt-16'>
           <div className=''>
-            <Link to={"dashboard"} >
+            <Link to={"dashboard/alldata"} >
             Dashboard
             </Link>
 
