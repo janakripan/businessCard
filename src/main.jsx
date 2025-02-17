@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import Home from "./Routes/Home.jsx";
 import Dashboard from "./Routes/Dashboard.jsx";
 import { ApiProvider } from "./contexts/ApiContext.jsx";
+import DashboardLayout from "./DashboardLayout.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -14,8 +15,12 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
-          <Route path="dashboard" element={<Dashboard/>} />
+         
         </Route>
+        <Route path="dashboard" element={<DashboardLayout/>} >
+         <Route index element={<Dashboard/>} />
+        </Route>
+
       </Routes>
     </StrictMode>
     </ApiProvider>

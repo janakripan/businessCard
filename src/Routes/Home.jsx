@@ -2,6 +2,7 @@ import React from 'react'
 import landing from '../Assets/2a4e2db68d3b873e2a56bf68d59cd1f7.jpeg'
 import Layouts from '../components/Layouts'
 import DetailsForm from '../components/DetailsForm'
+import { Link } from 'react-router'
 
 function Home() {
   return (
@@ -20,6 +21,15 @@ function Home() {
         <section>
           <DetailsForm/>
         </section>
+        <div className='w-full pt-16'>
+          <div className=''>
+            <Link to={"dashboard"} >
+            Dashboard
+            </Link>
+
+          </div>
+
+        </div>
 
 
       
