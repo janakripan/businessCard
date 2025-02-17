@@ -2,10 +2,10 @@ import React from 'react'
 
 function Header() {
   return (
-    <div className='w-full h-24 flex items-center  absolute top-0 mt-4'>
-        <div className="w-full max-w-screen-xl  h-fit flex justify-between items-center mx-auto px-4">
-            <div className='flex flex-row items-center gap-x-2'> 
-                <div className='flex items-center justify-center rounded-full bg-[#FF7B29] text-white text-base font-inter w-9 aspect-square font-bold '>
+    <div className='w-full h-24 flex items-center backdrop-blur-lg shadow-lg  absolute top-0 z-10 pt-4'>
+        <div className="w-full max-w-screen-xl  h-fit flex justify-between items-center mx-auto px-2">
+            <div className='flex flex-row items-center gap-x-2 '> 
+                <div className='flex items-center justify-center  rounded-full bg-[#FF7B29] text-white text-base font-inter w-9 aspect-square font-bold '>
                     
                         ST
                    
@@ -14,7 +14,7 @@ function Header() {
                     Sacrosys Technology's
                 </h5>
             </div>
-            <div>
+            <div className=' w-fit h-fit'>
                 <button className=' bg-[#31C3E0] scale-75 md:scale-100  px-6 py-3 text-white text-base font-inter font-medium rounded-lg active:bg-[#89DCED] active:scale-90 md:hover:scale-105 transition-all duration-300 '>
 
                     Contact Us

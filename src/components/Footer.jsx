@@ -2,9 +2,9 @@ import React from 'react'
 
 function Footer() {
   return (
-    <div className='w-full min-h-[25vh] h-fit  flex  items-center lg:mb-24 px-4 '>
+    <div className='w-full min-h-[25vh] h-fit  flex  items-center bg-white/100 lg:mb-24 px-4 z-10 '>
 
-      <div className='w-full max-w-screen-xl mx-auto  h-full flex flex-col-reverse gap-y-20 md:flex-row items-center justify-between ' >
+      <div className='w-full max-w-screen-xl mx-auto  h-full flex flex-col-reverse gap-y-20 md:flex-row bg-white/100 items-center justify-between z-10 ' >
 
         <span className='text-lg md:text-xl lg:text-3xl font-public font-normal text-gray-400'>
           2024 Sacrosys Technologys
