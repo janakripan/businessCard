@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
- const ApiContext = createContext();
+const ApiContext = createContext();
 
- const ApiProvider = ({ children }) => {
+const ApiProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const API_URL =
@@ -13,13 +13,13 @@ import axios from "axios";
     setLoading(true);
     axios
       .get(API_URL)
-      .then((response) =>{ setData(response.data.data),
-        setLoading(false)
+      .then((response) => {
+        setData(response.data.data), setLoading(false);
       })
-      .catch((error) => {console.error("API Error:", error)
+      .catch((error) => {
+        console.error("API Error:", error);
         setLoading(false);
       });
-    
   }, []);
   console.log(loading);
   return (
@@ -28,4 +28,4 @@ import axios from "axios";
     </ApiContext.Provider>
   );
 };
-export {ApiContext,ApiProvider};
+export { ApiContext, ApiProvider };

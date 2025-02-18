@@ -1,28 +1,20 @@
-import react from 'react'
-import { Outlet } from 'react-router'
-import Footer from './components/Footer'
-import Header from './components/Header'
-
+import react from "react";
+import { Outlet } from "react-router";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 function App() {
-
-
   return (
-    <div className='relative'>
+    <div className="relative">
+      <Header />
 
-      <Header/>
-
-      <div id='detail'>
-        <Outlet/>
+      <div id="detail">
+        <Outlet />
       </div>
 
-
-      <Footer/>
-
-
-
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

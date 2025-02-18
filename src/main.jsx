@@ -10,25 +10,28 @@ import DashboardLayout from "./DashboardLayout.jsx";
 import SingleData from "./components/dashboardParts/SingleData.jsx";
 import DashboardHome from "./components/dashboardParts/DashboardHome.jsx";
 import ScrollToTop from "./utils/ScrollToTop.jsx";
+import { SidebarProvider } from "./contexts/DashboardStyles.jsx";
+
+
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-  <ApiProvider>
-    <StrictMode>
-    <ScrollToTop/>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
-         
-        </Route>
-        <Route path="dashboard" element={<DashboardLayout/>} >
-         <Route index element={<DashboardHome/>} />
-         <Route path="alldata" element={<Dashboard/>}/>
-         <Route path="singledata"  element={<SingleData/>} />
-        </Route>
-
-      </Routes>
-    </StrictMode>
-    </ApiProvider>
+    <SidebarProvider>
+      <ApiProvider>
+        <StrictMode>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<App />}>
+              <Route index element={<Home />} />
+            </Route>
+            <Route path="dashboard" element={<DashboardLayout />}>
+              <Route index element={<DashboardHome />} />
+              <Route path="alldata" element={<Dashboard />} />
+              <Route path="singledata" element={<SingleData />} />
+            </Route>
+          </Routes>
+        </StrictMode>
+      </ApiProvider>
+      </SidebarProvider> 
   </BrowserRouter>
 );

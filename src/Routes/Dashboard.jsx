@@ -1,28 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext} from "react";
 import { ApiContext } from "../contexts/ApiContext";
-import ContentCard from "../components/dashboardParts/ContentCard";
 import LoadingAnimation from "../components/Shared/LoadingAnimation";
 import DashboardTable from "../components/dashboardParts/DashboardTable";
-
+import { sidebarContext } from "../contexts/DashboardStyles";
 
 function Dashboard() {
+  const {isOpen} = useContext(sidebarContext)
   const { data, loading } = useContext(ApiContext);
-  console.log(data)
+  console.log(data);
 
   if (loading) {
     return <LoadingAnimation />;
   }
   return (
-    <div className="w-full h-screen   bg-gray-50 mx-auto  flex flex-row relative px-4 mb-20">
-      <div className="w-full h-full min-h-screen max-w-screen-xl pt-20 mx-auto">
-        {/* <ul className="w-full  h-full flex flex-col items-center gap-y-4 pt-6 ">
-          {data.map((items, index) => (
-            <ContentCard key={index} items={items} />
-          ))}
-        </ul> */}
+    <div className="w-full h-screen    mx-auto  flex flex-row relative px-4 mb-20">
+      <div className={`w-full p-4  h-screen max-w-screen-xl pt-28 mx-auto transition-all duration-300 ${isOpen ?"pl-72" : "pl-0" }`}>
         <DashboardTable data={data} />
       </div>
-     
     </div>
   );
 }

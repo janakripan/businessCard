@@ -17,7 +17,7 @@ function DetailsForm() {
   // const [data, setData] = useState(null);
 
   const [apiError, setApiError] = useState("");
-  const [successMsg , setSuccessMsg] = useState("")
+  const [successMsg, setSuccessMsg] = useState("");
 
   const initialValues = {
     FullName: "",
@@ -54,19 +54,15 @@ function DetailsForm() {
   }, [apiError]);
   useEffect(() => {
     if (successMsg) {
-      
       const timer = setTimeout(() => {
         setSuccessMsg("");
       }, 3000);
 
       return () => {
         clearTimeout(timer);
-        
       };
-    } 
-
+    }
   }, [successMsg]);
-
 
   //console outputs
 
@@ -93,7 +89,7 @@ function DetailsForm() {
       )
       .then((response) => {
         console.log(response);
-        setSuccessMsg("Your details have been successfully submitted")
+        setSuccessMsg("Your details have been successfully submitted");
         resetForm();
         // setFieldValue("Broucher", []);
 
@@ -134,11 +130,8 @@ function DetailsForm() {
       <AnimatePresence>
         {apiError && (
           <ErrorModal apiError={apiError} setApiError={setApiError} />
-          
         )}
-        {successMsg&&(
-          <SuccessModal successMsg={successMsg} />
-        )}
+        {successMsg && <SuccessModal successMsg={successMsg} />}
       </AnimatePresence>
       <h2 className="text-xl md:text-3xl lg:text-4xl font-bold font-public  text-gray-800">
         Fill Your Details

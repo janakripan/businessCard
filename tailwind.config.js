@@ -11,9 +11,14 @@ export default {
         poppins: ['Poppins', 'sans-serif'],
         public :['public sans', 'ssans-serif' ]
       },
+      colors: {
+        'custom-blue': '#2c3e50', // Customize the scrollbar thumb color
+        'custom-gray': '#f1f1f1', // Customize the track color
+      },
       
     },
   },
-  plugins: [],
+  plugins: [
+  ],
 }
 
