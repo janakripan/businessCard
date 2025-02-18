@@ -7,7 +7,7 @@ import { IoIosArrowDropleft } from "react-icons/io";
 
 function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
 //   useEffect(()=>{
 //     const handleMouseMove = (e) => {
