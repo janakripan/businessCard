@@ -221,7 +221,7 @@ function DetailsForm() {
                       {countries.map((country) => (
                         <option
                           key={country.id}
-                          value={country.id}
+                          value={country.name}
                           label={country.name}
                         />
                       ))}
@@ -234,56 +234,7 @@ function DetailsForm() {
                   />
                 </div>
 
-                {/* <div className=" w-full md:w-1/2 flex flex-col  justify-center gap-2 mb-4 px-4">
-                <label className="text-gray-700 font-medium">Gender</label>
-                <div
-                  role="group"
-                  aria-labelledby="gender-radio-group"
-                  className="flex gap-4 mt-2"
-                >
-                  <div>
-                    <Field
-                      type="radio"
-                      id="male"
-                      name="gender"
-                      value="male"
-                      className="mr-2"
-                    />
-                    <label htmlFor="male" className="text-gray-600">
-                      Male
-                    </label>
-                  </div>
-                  <div>
-                    <Field
-                      type="radio"
-                      id="female"
-                      name="gender"
-                      value="female"
-                      className="mr-2"
-                    />
-                    <label htmlFor="female" className="text-gray-600">
-                      Female
-                    </label>
-                  </div>
-                  <div>
-                    <Field
-                      type="radio"
-                      id="other"
-                      name="gender"
-                      value="other"
-                      className="mr-2"
-                    />
-                    <label htmlFor="other" className="text-gray-600">
-                      Other
-                    </label>
-                  </div>
-                </div>
-                <ErrorMessage
-                  name="gender"
-                  component="div"
-                  className="text-red-600 text-sm"
-                />
-              </div> */}
+               
               </div>
 
               <div className="w-full h-fit ">

@@ -18,7 +18,7 @@ function DashboardLayout() {
 
      
 
-      <div id="DashboardDetail">
+      <div id="DashboardDetail" >
         <Outlet />
       </div>
 

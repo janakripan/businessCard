@@ -21,7 +21,7 @@ const ApiProvider = ({ children }) => {
         setLoading(false);
       });
   }, []);
-  console.log(loading);
+  
   return (
     <ApiContext.Provider value={{ data, loading }}>
       {children}

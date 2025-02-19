@@ -11,6 +11,7 @@ import SingleData from "./components/dashboardParts/SingleData.jsx";
 import DashboardHome from "./components/dashboardParts/DashboardHome.jsx";
 import ScrollToTop from "./utils/ScrollToTop.jsx";
 import { SidebarProvider } from "./contexts/DashboardStyles.jsx";
+import EditPage from "./components/dashboardParts/EditPage.jsx";
 
 
 
@@ -28,6 +29,7 @@ createRoot(document.getElementById("root")).render(
               <Route index element={<DashboardHome />} />
               <Route path="alldata" element={<Dashboard />} />
               <Route path="singledata" element={<SingleData />} />
+              <Route path="editdetails" element={<EditPage/>} />
             </Route>
           </Routes>
         </StrictMode>
