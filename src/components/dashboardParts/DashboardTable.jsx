@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Pagination, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 
 function DashboardTable({ data }) {
-  const itemsPerPage= 8
+  const itemsPerPage= 7
   console.log(data)
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -10,21 +10,21 @@ function DashboardTable({ data }) {
   
     useEffect(() => {
       if (!data || data.length === 0) {
-        setPaginatedData([]); // Prevent errors if data is undefined
+        setPaginatedData([]); 
         return;
       }
   
       const startIndex = (currentPage - 1) * itemsPerPage;
       const endIndex = startIndex + itemsPerPage;
       setPaginatedData(data.slice(startIndex, endIndex));
-    }, [data, currentPage]); // ✅ Also depend on `data`
-  
+    }, [data, currentPage]); 
     const handlePageChange = (event, value) => {
       setCurrentPage(value);
     };
   
   return (
-    <div className="w-full h-full  overflow-auto border-blue-400 border-[2px] custom-scrollbar rounded-xl relative ">
+   <div>
+     <div className="w-full h-full  overflow-auto border-blue-400 border-[2px] custom-scrollbar rounded-xl relative ">
      <TableContainer component={Paper} className="custom-scrollbar" >
      <Table className="w-full border-collapse shadow-md rounded-lg ">
         <TableHead >
@@ -65,7 +65,10 @@ function DashboardTable({ data }) {
         </TableBody>
       </Table>
      </TableContainer>
-      <Stack spacing={2} sx={{ marginTop: "20px", alignItems: "center" }} className="absolute bottom-0 ">
+      
+    </div>
+    <div className="w-full h-fit py-2 flex items-center justify-end ">
+    <Stack spacing={2} sx={{ marginTop: "10px", alignItems: "center" }} className="">
         <Pagination
           count={Math.ceil(data.length / itemsPerPage)}
           page={currentPage}
@@ -74,6 +77,7 @@ function DashboardTable({ data }) {
         />
       </Stack>
     </div>
+   </div>
   );
 }
 

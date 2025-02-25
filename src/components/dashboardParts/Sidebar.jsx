@@ -10,7 +10,7 @@ function Sidebar() {
  
   return (
     <div
-      className={` w-fit h-screen absolute left-0 pt-24 transition-transform duration-300 flex flex-row items-center z-20 ${
+      className={` w-fit h-full absolute left-0 pt-24 transition-transform duration-300 flex flex-row items-center z-20 ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
