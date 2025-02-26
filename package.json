@@ -12,11 +12,13 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
     "@mui/icons-material": "^6.4.0",
     "@mui/material": "^6.4.5",
     "@mui/styled-engine-sc": "^6.4.0",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
+    "firebase": "^11.3.1",
     "formik": "^2.4.6",
     "framer-motion": "^12.4.4",
     "lottie-react": "^2.4.1",

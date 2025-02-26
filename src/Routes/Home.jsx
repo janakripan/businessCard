@@ -19,9 +19,12 @@ function Home() {
       <section>
         <DetailsForm />
       </section>
-      <div className="w-full pt-16">
+      <div className="w-full pt-16 flex justify-between">
         <div className="">
           <Link to={"dashboard/alldata"}>Dashboard</Link>
+        </div>
+        <div>
+          <Link to={"authentication/signup"}>SignUp</Link>
         </div>
       </div>
     </div>

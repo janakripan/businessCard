@@ -12,6 +12,10 @@ import DashboardHome from "./components/dashboardParts/DashboardHome.jsx";
 import ScrollToTop from "./utils/ScrollToTop.jsx";
 import { SidebarProvider } from "./contexts/DashboardStyles.jsx";
 import EditPage from "./components/dashboardParts/EditPage.jsx";
+import AuthLayout from "./Routes/AuthLayout.jsx";
+import AuthHome from "./components/AuthParts/AuthHome.jsx";
+import Login from "./components/AuthParts/Login.jsx";
+import SignUp from "./components/AuthParts/SignUp.jsx";
 
 
 
@@ -30,6 +34,10 @@ createRoot(document.getElementById("root")).render(
               <Route path="alldata" element={<Dashboard />} />
               <Route path="singledata" element={<SingleData />} />
               <Route path="editdetails/:id" element={<EditPage/>} />
+            </Route>
+            <Route path="authentication" element={<AuthLayout/>}>
+              <Route path="login" element={<Login/>}/>
+              <Route path="signup" element={<SignUp/>}/>
             </Route>
           </Routes>
         </StrictMode>
