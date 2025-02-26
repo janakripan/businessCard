@@ -1,8 +1,6 @@
 import React from 'react'
 import bgPc from '../../Assets/Telecommuting-rafiki.png'
-import { Formik } from 'formik'
 import AuthForm from './AuthForm'
-import GoogleSignup from './GoogleSignup'
 
 
 function SignUp() {
@@ -19,7 +17,7 @@ function SignUp() {
             <p>
                 OR
             </p>
-            <GoogleSignup/>
+            
 
             </div>
 
