@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useLocation } from "react-router";
 import { TbMenuDeep } from "react-icons/tb";
 import { IoMdClose } from "react-icons/io";
@@ -6,9 +6,7 @@ import { sidebarContext } from "../contexts/DashboardStyles";
 
 function Header() {
   const {handleclick,isOpen} = useContext(sidebarContext)
-  useEffect(()=>{
-    console.log(isOpen)
-  },[isOpen])
+ 
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
   return (

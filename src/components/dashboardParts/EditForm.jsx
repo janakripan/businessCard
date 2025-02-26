@@ -7,7 +7,7 @@ import { IoLogoWhatsapp } from "react-icons/io";
 import { BiSolidLocationPlus } from "react-icons/bi";
 import { MdBusinessCenter } from "react-icons/md";
 import { Field, ErrorMessage } from "formik";
-import { countries } from "../../constants/countries";
+
 
 function EditForm({values}) {
   return (
@@ -138,32 +138,7 @@ function EditForm({values}) {
           className="text-red-600 text-sm"
         />
       </div>
-      <div className="w-full md:w-1/2 flex flex-col h-fit">
-        <div className="h-12 w-full pl-4 text-2xl rounded-xl flex items-center bg-[#254E7E17] px-4">
-          {/* <Field
-            name="Country"
-            as="select"
-            value={values.Country}
-            className="w-full text-base h-full border-none focus:outline-none bg-transparent "
-          >
-            <option value="" disabled>
-              Select a Country
-            </option>
-            {countries.map((country) => (
-              <option
-                key={country.id}
-                value={country.name}
-                label={country.name}
-              />
-            ))}
-          </Field> */}
-        </div>
-        <ErrorMessage
-          name="Country"
-          component="div"
-          className="text-red-600 text-sm"
-        />
-      </div>
+      
     </div>
   );
 }

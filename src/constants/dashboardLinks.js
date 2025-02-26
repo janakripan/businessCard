@@ -22,10 +22,5 @@ export const dashboardLinks = [
     icon: IoPersonOutline,
     path: "singledata",
   },
-  {
-    id: 4,
-    title: "Edit Details",
-    icon: FiEdit,
-    path: "editdetails",
-  },
+ 
 ];

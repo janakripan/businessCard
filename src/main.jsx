@@ -29,7 +29,7 @@ createRoot(document.getElementById("root")).render(
               <Route index element={<DashboardHome />} />
               <Route path="alldata" element={<Dashboard />} />
               <Route path="singledata" element={<SingleData />} />
-              <Route path="editdetails" element={<EditPage/>} />
+              <Route path="editdetails/:id" element={<EditPage/>} />
             </Route>
           </Routes>
         </StrictMode>

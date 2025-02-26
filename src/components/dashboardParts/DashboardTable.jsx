@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Pagination, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
+import { LiaEdit } from "react-icons/lia";
+import { useNavigate } from "react-router";
 
 function DashboardTable({ data }) {
+  const navigate = useNavigate();
   const itemsPerPage= 7
-  console.log(data)
+  
 
     const [currentPage, setCurrentPage] = useState(1);
     const [paginatedData, setPaginatedData] = useState([]);
@@ -21,6 +24,9 @@ function DashboardTable({ data }) {
     const handlePageChange = (event, value) => {
       setCurrentPage(value);
     };
+    const handleEdit=(id)=>{
+      navigate(`/dashboard/editdetails/${id}`)
+    }
   
   return (
    <div>
@@ -40,6 +46,8 @@ function DashboardTable({ data }) {
             <TableCell className="p-3 border">country</TableCell>
             <TableCell className="p-3 border">Broucher</TableCell>
             <TableCell className="p-3 border">About</TableCell>
+            <TableCell className="p-3 border">Action</TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -59,6 +67,13 @@ function DashboardTable({ data }) {
               <TableCell className="p-3 whitespace-nowrap border border-x-0 ">{item.Country}</TableCell>
               <TableCell className="p-3 whitespace-nowrap border border-x-0 ">{item.Broucher}</TableCell>
               <TableCell className="p-3 whitespace-nowrap border border-x-0 ">{item.Description}</TableCell>
+              <TableCell className="p-3 whitespace-nowrap border border-x-0 ">
+                <button 
+                onClick={()=>handleEdit(item.ID)}
+                className="w-full h-full flex items-center justify-center">
+                  <LiaEdit className="text-xl"/>
+                </button>
+              </TableCell>
             </TableRow>
           ))}
          

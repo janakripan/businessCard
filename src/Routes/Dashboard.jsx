@@ -8,6 +8,7 @@ import SearchBar from "../shared/SearchBar";
 function Dashboard() {
   const {isOpen} = useContext(sidebarContext)
   const { data, loading } = useContext(ApiContext);
+ 
   
   const [searchQuery, setSearchQuery] = useState("");
   const [displayData, setDisplayData] = useState([]); 
