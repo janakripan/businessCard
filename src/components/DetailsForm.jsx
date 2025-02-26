@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { IoIosCloseCircle } from "react-icons/io";
 import { countries } from "../constants/countries";
@@ -9,12 +9,13 @@ import axios from "axios";
 import ErrorModal from "./Shared/ErrorModal";
 import { AnimatePresence } from "motion/react";
 import SuccessModal from "./Shared/SuccessModal";
+import { ApiContext } from "../contexts/ApiContext";
 
 function DetailsForm() {
   //state variables
   // const [brochurePreview, setBrochurePreview] = useState([]);
 
-  // const [data, setData] = useState(null);
+ const {fetchData} = useContext(ApiContext)
 
   const [apiError, setApiError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
@@ -108,6 +109,7 @@ function DetailsForm() {
       })
       .finally(() => {
         setSubmitting(false);
+        fetchData();
       });
   };
 

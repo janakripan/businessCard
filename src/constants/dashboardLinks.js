@@ -1,7 +1,7 @@
 import { CiHome } from "react-icons/ci";
 import { TiThListOutline } from "react-icons/ti";
 import { IoPersonOutline } from "react-icons/io5";
-import { FiEdit } from "react-icons/fi";
+
 
 export const dashboardLinks = [
   {

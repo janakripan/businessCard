@@ -7,10 +7,12 @@ import { countries } from "../../constants/countries";
 import { ApiContext } from "../../contexts/ApiContext";
 import LoadingAnimation from "../Shared/LoadingAnimation";
 import axios from "axios"; 
+import { sidebarContext } from "../../contexts/DashboardStyles";
 
 function EditPage() {
   
   const navigate = useNavigate();
+  const {isOpen} = useContext(sidebarContext)
 
   const { id } = useParams();
   const userId = Number(id);
@@ -64,7 +66,7 @@ function EditPage() {
   return (
     <div className="w-full h-screen  overflow-y-auto pt-28">
       {data ? (
-        <div className="w-full max-w-screen-xl mx-auto px-4 py-10 lg:px-48  h-fit  ">
+        <div className={ `w-full max-w-screen-xl mx-auto px-4 py-10 transition-all duration-300  h-fit ${isOpen ?"md:pl-[340px] lg:pl-72  " : "pl-0" }`  }>
           <Formik
             initialValues={initialValues}
             enableReinitialize={true}

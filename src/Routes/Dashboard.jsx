@@ -50,7 +50,7 @@ function Dashboard() {
   return (
     <div className="w-full h-screen    mx-auto  flex flex-row relative px-4 ">
      
-      <div className={`w-full p-4  h-screen max-w-screen-xl pt-28 mx-auto transition-all duration-300 ${isOpen ?"pl-72" : "pl-0" }`}>
+      <div className={`w-full p-4  h-screen max-w-screen-xl pt-28 mx-auto transition-all duration-300 ${isOpen ?"md:pl-[340px] lg:pl-72 "  : "pl-0" }`}>
        <div className="w-full h-fit flex justify-end">
         <SearchBar onSearch={handleSearch} setNoResult={setNoResults}/>
         
