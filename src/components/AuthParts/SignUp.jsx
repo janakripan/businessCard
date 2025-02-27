@@ -1,32 +1,23 @@
-import React from 'react'
-import bgPc from '../../Assets/Telecommuting-rafiki.png'
-import AuthForm from './AuthForm'
+import React from "react";
+
+import AuthForm from "./AuthForm";
 
 
-function SignUp() {
+function SignUp({setIsNew,isNew}) {
   return (
-    <div className='w-full max-w-screen-xl mx-auto  h-screen  flex items-center justify-center pt-24  '>
+    <>
+      <div className={`lg:w-5/12 w-full h-full bg-white lg:justify-between flex flex-col shadow-sm shadow-[#F66F4D] rounded-lg p-4 transition-all duration-300 ${isNew?"translate-x-0 " : " -translate-x-full"}`}>
+      <div className="w-full  h-fit">
+         <AuthForm />
+      </div>
+      <p className="w-full h-fit py-5 text-center ">
+        Already have an account? <button className=" hover:text-blue-700 hover:underline " onClick={()=>setIsNew(false)} > Login </button>
+      </p>
+       
+      </div>
 
-        <div className='w-full   h-full flex items-center justify-center md:py-6 lg:pt-20 '
-         style={{ backgroundImage: "url('/authBg.svg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
-
-            <div className='w-11/12 h-full  shadow-lg relative overflow-hidden bg-gray-50 p-4'>
-            <img src={bgPc} alt="" className='object-cover w-[50%] absolute right-0  ' />
-            <div className='w-5/12 h-full bg-white shadow-sm shadow-[#F66F4D] rounded-lg p-4'>
-            <AuthForm/>
-            <p>
-                OR
-            </p>
-            
-
-            </div>
-
-            </div>
-
-        </div>
-      
-    </div>
-  )
+    </>
+  );
 }
 
-export default SignUp
+export default SignUp;

@@ -17,8 +17,6 @@ import AuthHome from "./components/AuthParts/AuthHome.jsx";
 import Login from "./components/AuthParts/Login.jsx";
 import SignUp from "./components/AuthParts/SignUp.jsx";
 
-
-
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <SidebarProvider>
@@ -33,15 +31,17 @@ createRoot(document.getElementById("root")).render(
               <Route index element={<DashboardHome />} />
               <Route path="alldata" element={<Dashboard />} />
               <Route path="singledata" element={<SingleData />} />
-              <Route path="editdetails/:id" element={<EditPage/>} />
+              <Route path="editdetails/:id" element={<EditPage />} />
             </Route>
-            <Route path="authentication" element={<AuthLayout/>}>
-              <Route path="login" element={<Login/>}/>
-              <Route path="signup" element={<SignUp/>}/>
+            <Route path="authentication" element={<AuthLayout />}>
+              <Route path="authome" element={<AuthHome />}>
+                <Route path="login" element={<Login />} />
+                <Route path="signup" element={<SignUp />} />
+              </Route>
             </Route>
           </Routes>
         </StrictMode>
       </ApiProvider>
-      </SidebarProvider> 
+    </SidebarProvider>
   </BrowserRouter>
 );

@@ -24,7 +24,7 @@ function Home() {
           <Link to={"dashboard/alldata"}>Dashboard</Link>
         </div>
         <div>
-          <Link to={"authentication/signup"}>SignUp</Link>
+          <Link to={"authentication/authome/signup"}>SignUp</Link>
         </div>
       </div>
     </div>
