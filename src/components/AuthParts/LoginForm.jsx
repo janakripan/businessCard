@@ -1,44 +1,70 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import React from 'react'
-import { SignupValidation } from '../../validations/SignupValidation'
+import { LoginValidation } from '../../validations/LoginValidation'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+
+
 
 function LoginForm() {
+  const navigate = useNavigate();
+
     const initialvalues = {
-        Email:"",
+        UserName:"",
         Password:"",
-        ConfirmPassword:"",
     }
-    const handleSubmit = (values) =>{
+    const handleSubmit = async(values,{setSubmitting, setErrors}) =>{
+     
+      try{
+       
 
-        console.log(values)
-
-    }
+          const response = await axios.request({
+            method: "GET",
+            url: "https://sacrosys.net:6662/api/7263/GetAuthorized",
+            headers:{
+              uid:values.UserName,
+              pwd: values.Password, 
+            token: "w^0V6jJamvLyaBy5VEYQ2x4gzwrx5BifP6wjB/hQDNmDFSJ2//4/4oze7iJuiFrd",
+            }
+          });
+          console.log("Login Successful:", response.data);
+          localStorage.setItem("authData", JSON.stringify(response.data));
+          navigate("/dashboard/alldata" ,{ replace: true });
+         }catch (error) {
+          console.error("Login Failed:", error.response?.data || error.message);
+          setErrors({ UserName: "Invalid Username or password" });
+        } finally {
+          setSubmitting(false);
+        }
+      
+      }
   return (
     <div className='w-full h-full  '>
         <Formik
         initialValues={initialvalues}
         onSubmit={handleSubmit}
-        validationSchema={SignupValidation}
+        validationSchema={LoginValidation}
         >
         {({
           values,
           isSubmitting, 
         }) => {
           return (
-            <Form className='w-full h-full px-4 flex flex-col justify-between   '>
+            <Form className='w-full h-full px-4 flex flex-col justify-between   ' >
                 <div className='w-full h-fit flex flex-col gap-y-6  '>
                 <div className="w-full h-fit flex flex-col    ">
                        <div className="h-12 w-full text-2xl rounded-xl flex items-center bg-[#254E7E17]">
                          
                          <Field
-                           type="email"
-                           name="Email"
-                           placeholder="E-mail"
+                           type="text"
+                           name="UserName"
+                           placeholder="E-mail or Username"
+                           autoComplete="username"
                            className=" w-full h-full border-none focus:outline-[#F66F4D] placeholder:text-base text-base bg-transparent pl-4 rounded-xl"
                          />
                        </div>
                        <ErrorMessage
-                         name="Email"
+                         name="UserName"
                          component="div"
                          className="text-red-600 text-sm"
                        />
@@ -50,6 +76,7 @@ function LoginForm() {
                                  type="password"
                                  name="Password"
                                  placeholder="Enter Your Password"
+                                 autoComplete="current-password"
                                  className=" w-full h-full border-none focus:outline-[#F66F4D] placeholder:text-base text-base bg-transparent pl-4 rounded-xl"
                                />
                              </div>
@@ -65,7 +92,7 @@ function LoginForm() {
                            <div className='w-full h-12  rounded-lg scale-x-95 active:scale-90 transition-all duration-200  hover:scale-100 overflow-hidden mt-12 '>
                             <button disabled={isSubmitting}  type='submit'  className='w-full h-full bg-[#F66F4D] disabled:bg-slate-200'>
                                 {
-                                    isSubmitting ? "Signing Up" : "SignUp"
+                                    isSubmitting ? "Logging In" : "Login"
                                 }
 
 
@@ -84,3 +111,30 @@ function LoginForm() {
 }
 
 export default LoginForm
+
+
+
+
+
+
+// try{
+       
+
+//   const response = await axios.request({
+//     method: "GET",
+//     url: "https://sacrosys.net:6662/api/7263/GetAuthorized",
+//     headers:{
+//       uid:values.UserName,
+//       pwd: values.Password, 
+//     token: "w^0V6jJamvLyaBy5VEYQ2x4gzwrx5BifP6wjB/hQDNmDFSJ2//4/4oze7iJuiFrd",
+//     }
+//   });
+//   console.log("Login Successful:", response.data);
+//   localStorage.setItem("authData", JSON.stringify(response.data));
+//   navigate("/dashboard/alldata" ,{ replace: true });
+//  }catch (error) {
+//   console.error("Login Failed:", error.response?.data || error.message);
+//   setErrors({ UserName: "Invalid Username or password" });
+// } finally {
+//   setSubmitting(false);
+// }

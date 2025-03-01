@@ -17,22 +17,26 @@ function AuthHome() {
           backgroundPosition: "center",
         }}
       >
-        <div className="w-11/12 h-fit lg:h-fit lg:py-52 xl:h-full xl:py-16 items-center  shadow-lg relative overflow-hidden bg-gray-50 transition-all duration-300 p-0 lg:p-6 ">
-          
+        <div className="w-11/12 h-fit lg:h-fit lg:py-52 xl:h-full xl:py-10 items-center  shadow-lg relative overflow-hidden bg-gray-50 transition-all duration-300 p-0 lg:p-6 ">
           <AnimatePresence mode="wait">
-            {
-              isNew
-              ?<img
-              src={Signupbg}
-              alt=""
-              className="object-cover w-0 lg:w-[50%] absolute right-0 "
-            />
-            :<img
-            src={loginbg}
-            alt=""
-            className="object-cover w-0 lg:w-[50%] absolute right-0  "
-          />
-            }
+            {isNew ? (
+              <div className="w-[50%] h-fit absolute right-0 xl:top-0">
+                <img
+                src={Signupbg}
+                alt=""
+                className="object-contain w-0 lg:w-full   "
+              />
+
+              </div>
+            ) : (
+              <img
+                src={loginbg}
+                alt=""
+                className="object-contain w-0 lg:w-[50%] absolute right-0 xl:top-10  "
+              />
+            )}
+          </AnimatePresence>
+          <AnimatePresence mode="wait">
             {isNew ? (
               <motion.div
                 key="signup"
