@@ -4,9 +4,19 @@ import SignUp from "./SignUp";
 import Login from "./Login";
 import loginbg from "../../Assets/Login-amico.png";
 import Signupbg from "../../Assets/Telecommuting-rafiki.png";
+import { useLocation, useNavigate } from "react-router";
 
 function AuthHome() {
-  const [isNew, setIsNew] = useState(true);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  
+
+  const isNew = location.pathname.includes("/signup");
+
+  const toggleAuth = () => {
+    navigate(isNew ? "/authentication/authome/login" : "/authentication/authome/signup");
+  };
   return (
     <div className="w-full max-w-screen-xl mx-auto  h-screen  flex items-center justify-center pt-24  ">
       <div
@@ -45,7 +55,7 @@ function AuthHome() {
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.5 }}
               >
-                <SignUp setIsNew={setIsNew} isNew={isNew} />
+                <SignUp setIsNew={toggleAuth} isNew={isNew} />
               </motion.div>
             ) : (
               <motion.div
@@ -55,7 +65,7 @@ function AuthHome() {
                 exit={{ opacity: 0, x: 50 }}
                 transition={{ duration: 0.5 }}
               >
-                <Login setIsNew={setIsNew} isNew={isNew} />
+                <Login setIsNew={toggleAuth} isNew={isNew} />
               </motion.div>
             )}
           </AnimatePresence>

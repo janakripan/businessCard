@@ -2,10 +2,10 @@ import React from "react";
 import AuthForm from "./AuthForm";
 import LoginForm from "./LoginForm";
 
-function Login({ setIsNew,isNew }) {
+function Login({ setIsNew }) {
   return (
     <>
-      <div className={`lg:w-5/12 w-full h-full flex flex-col lg:justify-between  shadow-sm shadow-[#F66F4D] rounded-lg p-4 transition-all duration-300  ${isNew?"translate-x-full " : " translate-x-0"}`}>
+      <div className={`lg:w-5/12 w-full h-full flex flex-col lg:justify-between  shadow-sm shadow-[#F66F4D] rounded-lg p-4 `}>
         <div className="w-full 0 h-fit">
          <LoginForm/>
         </div>
@@ -21,7 +21,7 @@ function Login({ setIsNew,isNew }) {
             First Time Here?{" "}
             <button
               className=" hover:text-blue-700 hover:underline "
-              onClick={() => setIsNew(true)}
+              onClick={ setIsNew}
             >
               {" "}
               Create an account{" "}

@@ -3,11 +3,13 @@ import React from 'react'
 import { LoginValidation } from '../../validations/LoginValidation'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 
 
 function LoginForm() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
     const initialvalues = {
         UserName:"",
@@ -28,7 +30,7 @@ function LoginForm() {
             }
           });
           console.log("Login Successful:", response.data);
-          localStorage.setItem("authData", JSON.stringify(response.data));
+          login(response.data);
           navigate("/dashboard/alldata" ,{ replace: true });
          }catch (error) {
           console.error("Login Failed:", error.response?.data || error.message);
