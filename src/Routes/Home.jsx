@@ -19,12 +19,9 @@ function Home() {
       <section>
         <DetailsForm />
       </section>
-      <div className="w-full pt-16 flex justify-between">
-        <div className="">
+      <div className="w-full pt-16 flex justify-start">
+        <div className="px-4 py-2 bg-orange-500 rounded-lg text-white">
           <Link to={"dashboard/alldata"}>Dashboard</Link>
-        </div>
-        <div>
-          <Link to={"authentication/authome/signup"}>SignUp</Link>
         </div>
       </div>
     </div>

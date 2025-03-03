@@ -30,7 +30,7 @@ function LoginForm() {
             }
           });
           console.log("Login Successful:", response.data);
-          login(response.data);
+          login(response.data.emplyeeCode);
           navigate("/dashboard/alldata" ,{ replace: true });
          }catch (error) {
           console.error("Login Failed:", error.response?.data || error.message);
@@ -113,30 +113,3 @@ function LoginForm() {
 }
 
 export default LoginForm
-
-
-
-
-
-
-// try{
-       
-
-//   const response = await axios.request({
-//     method: "GET",
-//     url: "https://sacrosys.net:6662/api/7263/GetAuthorized",
-//     headers:{
-//       uid:values.UserName,
-//       pwd: values.Password, 
-//     token: "w^0V6jJamvLyaBy5VEYQ2x4gzwrx5BifP6wjB/hQDNmDFSJ2//4/4oze7iJuiFrd",
-//     }
-//   });
-//   console.log("Login Successful:", response.data);
-//   localStorage.setItem("authData", JSON.stringify(response.data));
-//   navigate("/dashboard/alldata" ,{ replace: true });
-//  }catch (error) {
-//   console.error("Login Failed:", error.response?.data || error.message);
-//   setErrors({ UserName: "Invalid Username or password" });
-// } finally {
-//   setSubmitting(false);
-// }
